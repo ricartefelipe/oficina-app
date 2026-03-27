@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0004-os-orcamento-resposta-idempotencia
+      author: oficina
+      changes:
+        - createTable:
+            tableName: os_orcamento_resposta_idempotencia
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: idempotency_key
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ordem_servico_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: decisao
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: os_orcamento_resposta_idempotencia
+            columnNames: idempotency_key
+            constraintName: uq_os_orc_resp_idempotency_key
+
+        - addForeignKeyConstraint:
+            baseTableName: os_orcamento_resposta_idempotencia
+            baseColumnNames: ordem_servico_id
+            referencedTableName: ordens_servico
+            referencedColumnNames: id
+            constraintName: fk_os_orc_resp_os
+            onDelete: RESTRICT

@@ -1,0 +1,38 @@
+/target/
+**/target/
+
+# IDEs (ignorar .idea exceto run configurations Maven versionadas)
+.idea/*
+!.idea/runConfigurations/
+!.idea/runConfigurations/**
+.idea/runConfigurations/_template*.xml
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Security scan outputs
+build/security/*
+!build/security/.gitkeep
+
+# HTML intermédio da geração de PDF (scripts/delivery/md-to-pdf-edge.ps1)
+docs/delivery/*.html
+
+# Kubernetes secrets locais (use secret.example.yaml)
+k8s/secret.yaml
+
+# Binário Terraform local (download para init/validate em CI local)
+.tools/
+
+# Terraform (estado local e overrides; commitar .terraform.lock.hcl)
+infra/.terraform/
+infra/kind/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/terraform.tfvars
+infra/*.auto.tfvars

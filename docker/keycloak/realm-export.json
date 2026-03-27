@@ -1,0 +1,53 @@
+{
+  "realm": "oficina",
+  "enabled": true,
+  "displayName": "Oficina",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": false,
+  "rememberMe": true,
+  "duplicateEmailsAllowed": false,
+  "loginWithEmailAllowed": false,
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Acesso administrativo ao back-end da oficina"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "oficina-api",
+      "name": "Oficina API",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "serviceAccountsEnabled": false,
+      "bearerOnly": false,
+      "fullScopeAllowed": true,
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "Oficina",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ADMIN"]
+    }
+  ]
+}

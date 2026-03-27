@@ -1,0 +1,17 @@
+# Atualizacoes de dependencias alinhadas ao Spring Boot BOM (evitar pins manuais desnecessarios).
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly

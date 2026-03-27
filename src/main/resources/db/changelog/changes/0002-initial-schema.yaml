@@ -1,0 +1,439 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0002-initial-schema
+      author: oficina-mvp
+      comment: "Schema inicial do MVP (clientes, veiculos, catalogos, OS, itens, transicoes)"
+      changes:
+        - createTable:
+            tableName: clientes
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nome
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cpf_cnpj
+                  type: varchar(14)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: clientes
+            columnNames: cpf_cnpj
+            constraintName: uq_clientes_cpf_cnpj
+
+        - createTable:
+            tableName: veiculos
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: placa
+                  type: varchar(7)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: marca
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modelo
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ano
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cliente_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: veiculos
+            columnNames: placa
+            constraintName: uq_veiculos_placa
+
+        - addForeignKeyConstraint:
+            baseTableName: veiculos
+            baseColumnNames: cliente_id
+            referencedTableName: clientes
+            referencedColumnNames: id
+            constraintName: fk_veiculos_cliente
+            onDelete: RESTRICT
+
+        - createTable:
+            tableName: servicos_catalogo
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nome
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: descricao
+                  type: varchar(500)
+              - column:
+                  name: preco
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tempo_estimado_min
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: pecas_insumos
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nome
+                  type: varchar(140)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: descricao
+                  type: varchar(500)
+              - column:
+                  name: preco
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: estoque_atual
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: estoque_minimo
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: ordens_servico
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tracking_code
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cliente_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: veiculo_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: orcamento_total
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: orcamento_enviado_at
+                  type: timestamptz
+              - column:
+                  name: aprovado_at
+                  type: timestamptz
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: ordens_servico
+            columnNames: tracking_code
+            constraintName: uq_os_tracking_code
+
+        - addForeignKeyConstraint:
+            baseTableName: ordens_servico
+            baseColumnNames: cliente_id
+            referencedTableName: clientes
+            referencedColumnNames: id
+            constraintName: fk_os_cliente
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: ordens_servico
+            baseColumnNames: veiculo_id
+            referencedTableName: veiculos
+            referencedColumnNames: id
+            constraintName: fk_os_veiculo
+            onDelete: RESTRICT
+
+        - createIndex:
+            tableName: ordens_servico
+            indexName: idx_os_status
+            columns:
+              - column:
+                  name: status
+
+        - createIndex:
+            tableName: ordens_servico
+            indexName: idx_os_tracking_code
+            columns:
+              - column:
+                  name: tracking_code
+
+        - createTable:
+            tableName: os_itens_servico
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ordem_servico_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: servico_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantidade
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: preco_unitario
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tempo_estimado_min
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subtotal
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: os_itens_servico
+            baseColumnNames: ordem_servico_id
+            referencedTableName: ordens_servico
+            referencedColumnNames: id
+            constraintName: fk_os_itens_servico_os
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: os_itens_servico
+            baseColumnNames: servico_id
+            referencedTableName: servicos_catalogo
+            referencedColumnNames: id
+            constraintName: fk_os_itens_servico_catalogo
+            onDelete: RESTRICT
+
+        - createIndex:
+            tableName: os_itens_servico
+            indexName: idx_os_itens_servico_os
+            columns:
+              - column:
+                  name: ordem_servico_id
+
+        - createTable:
+            tableName: os_itens_peca
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ordem_servico_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: peca_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantidade
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: preco_unitario
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subtotal
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: os_itens_peca
+            baseColumnNames: ordem_servico_id
+            referencedTableName: ordens_servico
+            referencedColumnNames: id
+            constraintName: fk_os_itens_peca_os
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: os_itens_peca
+            baseColumnNames: peca_id
+            referencedTableName: pecas_insumos
+            referencedColumnNames: id
+            constraintName: fk_os_itens_peca_catalogo
+            onDelete: RESTRICT
+
+        - createIndex:
+            tableName: os_itens_peca
+            indexName: idx_os_itens_peca_os
+            columns:
+              - column:
+                  name: ordem_servico_id
+
+        - createTable:
+            tableName: os_transicoes_status
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ordem_servico_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: de_status
+                  type: varchar(40)
+              - column:
+                  name: para_status
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ocorrido_em
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: os_transicoes_status
+            baseColumnNames: ordem_servico_id
+            referencedTableName: ordens_servico
+            referencedColumnNames: id
+            constraintName: fk_os_transicoes_os
+            onDelete: CASCADE
+
+        - createIndex:
+            tableName: os_transicoes_status
+            indexName: idx_os_transicoes_os
+            columns:
+              - column:
+                  name: ordem_servico_id
