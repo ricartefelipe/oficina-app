@@ -1,4 +1,4 @@
-# Corre após o workflow "CI" concluir com sucesso num push a hml/prd (evita deploy antes da imagem no GHCR).
+﻿# Corre apÃ³s o workflow "CI" concluir com sucesso num push a hml/prd (evita deploy antes da imagem no GHCR).
 
 name: Deploy Kubernetes (hml / prd)
 
@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'hml' || github.event.workflow_run.head_branch == 'prd') && secrets.KUBE_CONFIG_B64 != '' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'hml' || github.event.workflow_run.head_branch == 'prd') }}
     runs-on: ubuntu-latest
     environment: ${{ github.event.workflow_run.head_branch == 'hml' && 'homologacao' || 'producao' }}
     permissions:
@@ -40,7 +40,7 @@ jobs:
         run: |
           if [ -z "$KUBE_CONFIG_B64" ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "Secret KUBE_CONFIG_B64 ausente; deploy será ignorado."
+            echo "Secret KUBE_CONFIG_B64 ausente; deploy serÃ¡ ignorado."
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
