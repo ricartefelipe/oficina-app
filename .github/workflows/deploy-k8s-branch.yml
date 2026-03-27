@@ -33,18 +33,28 @@ jobs:
         with:
           version: "v1.30.0"
 
-      - name: Configurar kubeconfig
+      - name: Verificar secret de kubeconfig
+        id: kubecheck
         env:
           KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
         run: |
           if [ -z "$KUBE_CONFIG_B64" ]; then
-            echo "::error::Defina o secret KUBE_CONFIG_B64 no Environment ou no repositório."
-            exit 1
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Secret KUBE_CONFIG_B64 ausente; deploy será ignorado."
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Configurar kubeconfig
+        if: ${{ steps.kubecheck.outputs.ready == 'true' }}
+        env:
+          KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
+        run: |
           mkdir -p "$HOME/.kube"
           echo "$KUBE_CONFIG_B64" | base64 -d > "$HOME/.kube/config"
 
       - name: Aplicar manifestos base
+        if: ${{ steps.kubecheck.outputs.ready == 'true' }}
         run: |
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/configmap.yaml
@@ -53,7 +63,9 @@ jobs:
           kubectl apply -f k8s/hpa.yaml
 
       - name: Atualizar imagem para a tag da branch
+        if: ${{ steps.kubecheck.outputs.ready == 'true' }}
         run: kubectl -n "$NS" set image "deployment/$DEPLOY_NAME" "$CONTAINER_NAME=$IMAGE" --record=true
 
       - name: Rollout
+        if: ${{ steps.kubecheck.outputs.ready == 'true' }}
         run: kubectl -n "$NS" rollout status "deployment/$DEPLOY_NAME" --timeout=180s
