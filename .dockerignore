@@ -1,0 +1,12 @@
+.git
+.gitignore
+target
+**/target
+.idea
+.vscode
+.DS_Store
+*.iml
+
+# docs is kept in the image build context by default, but it is not needed for runtime
+# If you prefer, you can uncomment the next line to exclude it from Docker build context
+# docs

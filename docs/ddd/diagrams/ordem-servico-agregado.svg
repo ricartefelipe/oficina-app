@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <title>Agregado Ordem de Serviço</title>
+  <desc>Diagrama do agregado OrdemServico, entidades internas e VOs (Fase 2).</desc>
+  <rect width="720" height="420" fill="#fafafa"/>
+  <text x="360" y="36" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold">Agregado: Ordem de Serviço</text>
+  <rect x="180" y="70" width="360" height="300" rx="8" fill="#e8f4fc" stroke="#1976d2" stroke-width="2"/>
+  <text x="360" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">OrdemServico (root)</text>
+  <rect x="220" y="120" width="120" height="44" rx="4" fill="#fff" stroke="#333"/>
+  <text x="280" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12">Cliente (ref)</text>
+  <rect x="380" y="120" width="120" height="44" rx="4" fill="#fff" stroke="#333"/>
+  <text x="440" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12">Veículo (ref)</text>
+  <rect x="200" y="200" width="140" height="44" rx="4" fill="#fff3e0" stroke="#e65100"/>
+  <text x="270" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12">ItemServiço</text>
+  <rect x="380" y="200" width="140" height="44" rx="4" fill="#fff3e0" stroke="#e65100"/>
+  <text x="450" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12">ItemPeça</text>
+  <rect x="240" y="280" width="240" height="44" rx="4" fill="#f3e5f5" stroke="#6a1b9a"/>
+  <text x="360" y="307" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12">Transições / Histórico de status</text>
+  <text x="360" y="400" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#555">Invariantes no domínio; API e persistência via adaptadores</text>
+</svg>

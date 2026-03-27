@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0001-bootstrap-placeholder
+      author: oficina-mvp
+      comment: "Bootstrap placeholder (Parte 1). As estruturas reais serao adicionadas na Parte 2."
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: "SELECT 1;"
