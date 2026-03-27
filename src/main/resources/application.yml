@@ -1,0 +1,78 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: oficina-service
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/oficina}
+    username: ${DB_USER:oficina}
+    password: ${DB_PASS:oficina}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    # OSIV: permite montar OrdemServicoDetalheResponse.from após o @Transactional do serviço (coleções lazy).
+    open-in-view: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    default-encoding: UTF-8
+    properties:
+      "[mail.smtp.auth]": false
+      "[mail.smtp.connectiontimeout]": 5000
+      "[mail.smtp.timeout]": 5000
+
+# JWT Resource Server
+# - O aplicativo busca as chaves publicas (JWK Set) no Keycloak.
+# - O "issuer" do token pode variar dependendo de como o token foi obtido (localhost vs. rede docker).
+#   Por isso, validamos contra uma lista de issuers permitidos.
+security:
+  jwt:
+    jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8180/realms/oficina/protocol/openid-connect/certs}
+    allowed-issuers: ${JWT_ALLOWED_ISSUERS:http://localhost:8180/realms/oficina}
+  cpf-jwt:
+    enabled: ${JWT_CPF_ENABLED:false}
+    issuer: ${JWT_CPF_ISSUER:https://oficina.local/auth/cpf}
+    secret: ${JWT_CPF_SECRET:}
+
+# Notificações (e-mail). MailHog local: UI http://localhost:8025 SMTP 1025
+app:
+  notification:
+    enabled: ${NOTIFICATION_ENABLED:true}
+    from: ${MAIL_FROM:noreply@oficina.local}
+    default-recipient: ${MAIL_TO_DEFAULT:cliente-demo@mailhog.local}
+    public-base-url: ${PUBLIC_BASE_URL:http://localhost:8080/api/public}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /openapi
+
+logging:
+  level:
+    root: INFO

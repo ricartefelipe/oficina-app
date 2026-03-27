@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0005-cliente-status-fase3
+      author: oficina-fase3
+      comment: "Status do cliente para consulta na autenticação serverless (Lambda CPF/JWT)"
+      changes:
+        - addColumn:
+            tableName: clientes
+            columns:
+              - column:
+                  name: status
+                  type: varchar(20)
+                  defaultValue: ATIVO
+                  constraints:
+                    nullable: false

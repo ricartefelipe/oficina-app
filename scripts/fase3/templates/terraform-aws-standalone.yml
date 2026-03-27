@@ -1,0 +1,89 @@
+# Plan ou Apply na AWS (requer secrets). Copiado do monorepo; working-directory é a raiz deste repositório.
+
+name: Terraform AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "plan (apenas leitura) ou apply (cria/altera recursos)"
+        required: true
+        type: choice
+        options:
+          - plan
+          - apply
+      enable_rds:
+        description: "Incluir RDS PostgreSQL (custo mensal na AWS)"
+        required: true
+        type: boolean
+        default: false
+      aws_region:
+        description: "Regiao AWS"
+        required: true
+        default: "sa-east-1"
+
+env:
+  TF_IN_AUTOMATION: "true"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Verificar credenciais AWS (OIDC ou chaves)
+        env:
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          if [ -n "$AWS_ROLE_ARN" ]; then
+            echo "Autenticacao AWS: OIDC (role)"
+            exit 0
+          fi
+          if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "Autenticacao AWS: access keys"
+            exit 0
+          fi
+          echo "::error::Defina AWS_ROLE_ARN (OIDC) ou o par AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY."
+          exit 1
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.9.8
+
+      - name: Configurar AWS (OIDC)
+        if: ${{ secrets.AWS_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ inputs.aws_region || 'sa-east-1' }}
+
+      - name: Configurar AWS (access keys)
+        if: ${{ secrets.AWS_ROLE_ARN == '' }}
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.aws_region || 'sa-east-1' }}
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Plan
+        if: ${{ inputs.command == 'plan' }}
+        env:
+          ENABLE_RDS: ${{ inputs.enable_rds }}
+        run: terraform plan -input=false -var="enable_rds=$ENABLE_RDS"
+
+      - name: Terraform Apply
+        if: ${{ inputs.command == 'apply' }}
+        env:
+          ENABLE_RDS: ${{ inputs.enable_rds }}
+        run: terraform apply -input=false -auto-approve -var="enable_rds=$ENABLE_RDS"

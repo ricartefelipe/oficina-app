@@ -1,0 +1,24 @@
+spring:
+  # Datasource sera definido dinamicamente via Testcontainers nos testes de integracao.
+  datasource:
+    url: jdbc:postgresql://localhost:5433/oficina
+    username: oficina
+    password: oficina
+
+  liquibase:
+    enabled: true
+
+security:
+  jwt:
+    # Nos testes usamos JWT mockado (spring-security-test). Mantemos valores dummy para nao depender de rede.
+    jwk-set-uri: http://localhost/dummy
+    allowed-issuers: ""
+
+logging:
+  level:
+    root: INFO
+
+# Testes de integração: sem SMTP real
+app:
+  notification:
+    enabled: false

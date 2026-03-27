@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0003-seed-catalog
+      author: oficina-mvp
+      comment: "Seed minima: servicos e pecas/insumos iniciais para demonstracao do MVP"
+      changes:
+        - insert:
+            tableName: servicos_catalogo
+            columns:
+              - column: { name: id, value: "11111111-1111-1111-1111-111111111111" }
+              - column: { name: nome, value: "Troca de oleo" }
+              - column: { name: descricao, value: "Troca de oleo do motor" }
+              - column: { name: preco, valueNumeric: 150.00 }
+              - column: { name: tempo_estimado_min, valueNumeric: 60 }
+
+        - insert:
+            tableName: servicos_catalogo
+            columns:
+              - column: { name: id, value: "22222222-2222-2222-2222-222222222222" }
+              - column: { name: nome, value: "Alinhamento" }
+              - column: { name: descricao, value: "Alinhamento de direcao" }
+              - column: { name: preco, valueNumeric: 120.00 }
+              - column: { name: tempo_estimado_min, valueNumeric: 45 }
+
+        - insert:
+            tableName: servicos_catalogo
+            columns:
+              - column: { name: id, value: "33333333-3333-3333-3333-333333333333" }
+              - column: { name: nome, value: "Balanceamento" }
+              - column: { name: descricao, value: "Balanceamento de rodas" }
+              - column: { name: preco, valueNumeric: 100.00 }
+              - column: { name: tempo_estimado_min, valueNumeric: 30 }
+
+        - insert:
+            tableName: pecas_insumos
+            columns:
+              - column: { name: id, value: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }
+              - column: { name: nome, value: "Oleo 5W30 (1L)" }
+              - column: { name: descricao, value: "Oleo sintetico 5W30" }
+              - column: { name: preco, valueNumeric: 50.00 }
+              - column: { name: estoque_atual, valueNumeric: 50 }
+              - column: { name: estoque_minimo, valueNumeric: 10 }
+
+        - insert:
+            tableName: pecas_insumos
+            columns:
+              - column: { name: id, value: "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" }
+              - column: { name: nome, value: "Filtro de oleo" }
+              - column: { name: descricao, value: "Filtro de oleo padrao" }
+              - column: { name: preco, valueNumeric: 35.00 }
+              - column: { name: estoque_atual, valueNumeric: 50 }
+              - column: { name: estoque_minimo, valueNumeric: 10 }
+
+        - insert:
+            tableName: pecas_insumos
+            columns:
+              - column: { name: id, value: "cccccccc-cccc-cccc-cccc-cccccccccccc" }
+              - column: { name: nome, value: "Pneu 175/70R13" }
+              - column: { name: descricao, value: "Pneu para veiculos compactos" }
+              - column: { name: preco, valueNumeric: 250.00 }
+              - column: { name: estoque_atual, valueNumeric: 10 }
+              - column: { name: estoque_minimo, valueNumeric: 2 }

@@ -1,0 +1,59 @@
+# Corre após o workflow "CI" concluir com sucesso num push a hml/prd (evita deploy antes da imagem no GHCR).
+
+name: Deploy Kubernetes (hml / prd)
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+concurrency:
+  group: deploy-k8s-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'hml' || github.event.workflow_run.head_branch == 'prd') }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.workflow_run.head_branch == 'hml' && 'homologacao' || 'producao' }}
+    permissions:
+      contents: read
+    env:
+      NS: oficina
+      DEPLOY_NAME: oficina-app
+      CONTAINER_NAME: app
+      IMAGE: ghcr.io/${{ github.repository }}:${{ github.event.workflow_run.head_branch }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Instalar kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: "v1.30.0"
+
+      - name: Configurar kubeconfig
+        env:
+          KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
+        run: |
+          if [ -z "$KUBE_CONFIG_B64" ]; then
+            echo "::error::Defina o secret KUBE_CONFIG_B64 no Environment ou no repositório."
+            exit 1
+          fi
+          mkdir -p "$HOME/.kube"
+          echo "$KUBE_CONFIG_B64" | base64 -d > "$HOME/.kube/config"
+
+      - name: Aplicar manifestos base
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/hpa.yaml
+
+      - name: Atualizar imagem para a tag da branch
+        run: kubectl -n "$NS" set image "deployment/$DEPLOY_NAME" "$CONTAINER_NAME=$IMAGE" --record=true
+
+      - name: Rollout
+        run: kubectl -n "$NS" rollout status "deployment/$DEPLOY_NAME" --timeout=180s

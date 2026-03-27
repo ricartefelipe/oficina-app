@@ -1,0 +1,79 @@
+# Deploy opcional: requer secrets no repositório (kubeconfig).
+# O enunciado da Fase 2 pede CD completo; este workflow automatiza kubectl apply quando o cluster está disponível.
+
+name: Deploy Kubernetes
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Tag da imagem em ghcr.io (deixe vazio para nao alterar a imagem do Deployment)"
+        required: false
+      wait_rollout:
+        description: "Aguardar rollout do Deployment"
+        required: true
+        type: boolean
+        default: true
+      smoke_health:
+        description: "Smoke test HTTP (port-forward para /actuator/health/liveness)"
+        required: true
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-k8s-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Instalar kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: "v1.30.0"
+
+      - name: Configurar kubeconfig
+        env:
+          KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
+        run: |
+          if [ -z "$KUBE_CONFIG_B64" ]; then
+            echo "::error::Defina o secret KUBE_CONFIG_B64 (kubeconfig em base64) nas Settings do repositório."
+            exit 1
+          fi
+          mkdir -p "$HOME/.kube"
+          echo "$KUBE_CONFIG_B64" | base64 -d > "$HOME/.kube/config"
+
+      - name: Aplicar manifestos (sem Secret com credenciais — criar antes no cluster)
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/hpa.yaml
+
+      - name: Atualizar imagem do Deployment (opcional)
+        if: ${{ inputs.image_tag != '' }}
+        env:
+          NS: oficina
+          DEPLOY: oficina-app
+          IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.image_tag }}
+        run: kubectl -n "$NS" set image "deployment/$DEPLOY" "app=$IMAGE" --record=true
+
+      - name: Aguardar rollout
+        if: ${{ inputs.wait_rollout }}
+        run: kubectl -n oficina rollout status deployment/oficina-app --timeout=180s
+
+      - name: Smoke — health (port-forward local)
+        if: ${{ inputs.smoke_health }}
+        run: |
+          kubectl -n oficina wait --for=condition=ready pod -l app=oficina-app --timeout=120s
+          kubectl -n oficina port-forward svc/oficina-app 18080:8080 &
+          PF_PID=$!
+          sleep 5
+          curl -fsS --retry 10 --retry-delay 3 --retry-connrefused "http://127.0.0.1:18080/actuator/health/liveness"
+          kill $PF_PID 2>/dev/null || true
