@@ -1,6 +1,6 @@
-# Prompt mestre — Tech Challenge Fase 3 (guia de implementação)
+# Tech Challenge Fase 3 — guia do enunciado (implementação)
 
-Documento de referência alinhado ao PDF **13SOAT - Fase 3**. Usar para orientar desenvolvimento, revisões e vídeo de demonstração.
+Documento de referência alinhado ao PDF **13SOAT - Fase 3**. Usar para orientar desenvolvimento, revisões e material de demonstração.
 
 ## Contexto
 
@@ -26,7 +26,7 @@ Multiunidades e muitos clientes → **segurança**, **escalabilidade**, **alta d
 3. Terraform **BD gerenciado**  
 4. Aplicação **no Kubernetes**
 
-Regras: `main`/`master` protegida; **só merge via PR**; deploy automático **hml** e **prd**.
+Regras neste projeto: ramos **`develop`** (integração) e **`master`** (espelho estável, atualizado a partir de `develop`); **só merge via PR**; deploy automático opcional em **Kubernetes** conforme pipelines (ambientes `homologacao` / `producao` no GitHub).
 
 ### Infra (nuvem livre)
 
@@ -47,8 +47,8 @@ Regras: `main`/`master` protegida; **só merge via PR**; deploy automático **hm
 ### Entregas
 
 - 4 repos: código, CI/CD, README (propósito, stack, deploy, diagrama do repo, Swagger/Postman).
-- **Vídeo** ≤15 min (CPF, pipeline, deploy, APIs protegidas, dashboard, logs/traces).
-- **PDF único** no portal: links dos 4 repos, vídeo, docs, **`soat-architecture`** em todos.
+- **Vídeo** ≤15 min (CPF, pipeline, deploy, APIs protegidas, dashboard, logs/traces) — quando exigido pelo enunciado.
+- **PDF único** no portal: links dos 4 repos, vídeo (se aplicável), docs, **`soat-architecture`** em todos.
 
 ## Estado neste monorepo (transição)
 

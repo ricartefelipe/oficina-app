@@ -1,6 +1,6 @@
-﻿# Corre apÃ³s o workflow "CI" concluir com sucesso num push a hml/prd (evita deploy antes da imagem no GHCR).
+# Corre após o workflow "CI" concluir com sucesso num push a develop ou master (evita deploy antes da imagem no GHCR).
 
-name: Deploy Kubernetes (hml / prd)
+name: Deploy Kubernetes (develop / master)
 
 on:
   workflow_run:
@@ -13,9 +13,9 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'hml' || github.event.workflow_run.head_branch == 'prd') }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'develop' || github.event.workflow_run.head_branch == 'master') }}
     runs-on: ubuntu-latest
-    environment: ${{ github.event.workflow_run.head_branch == 'hml' && 'homologacao' || 'producao' }}
+    environment: ${{ github.event.workflow_run.head_branch == 'develop' && 'homologacao' || 'producao' }}
     permissions:
       contents: read
     env:
@@ -29,7 +29,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Instalar kubectl
-        uses: azure/setup-kubectl@v4
+        uses: azure/setup-kubectl@v5
         with:
           version: "v1.30.0"
 
@@ -40,7 +40,7 @@ jobs:
         run: |
           if [ -z "$KUBE_CONFIG_B64" ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "Secret KUBE_CONFIG_B64 ausente; deploy serÃ¡ ignorado."
+            echo "Secret KUBE_CONFIG_B64 ausente; deploy será ignorado."
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
