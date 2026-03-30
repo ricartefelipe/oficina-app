@@ -12,7 +12,7 @@ Monólito do **Sistema Integrado de Atendimento e Execução de Serviços** para
 
 > Requisitos oficiais: **Fase 2** e **Fase 3** - documentos Tech Challenge (disciplina SOAT).
 
-**Planeamento Fase 3 (arquitetura, ADRs, RFC, backlog, prompt, observabilidade):** [`docs/fase3/README.md`](docs/fase3/README.md) · [Prompt Fase 3](docs/fase3/PROMPT-FASE3.md) · [Prometheus / logs](docs/fase3/observabilidade-prometheus.md).
+**Planeamento Fase 3 (arquitetura, ADRs, RFC, backlog, guia do enunciado, observabilidade):** [`docs/fase3/README.md`](docs/fase3/README.md) · [Guia enunciado Fase 3](docs/fase3/guia-enunciado-fase3.md) · [Prometheus / logs](docs/fase3/observabilidade-prometheus.md).
 
 ### Entrega oficial (portal + repositório)
 
