@@ -40,7 +40,7 @@ Para **voltar a gerar** os PDFs após editar o Markdown: `.\scripts\delivery\md-
 - [4. Como rodar localmente](#4-como-rodar-localmente)
 - [Kubernetes (`/k8s`)](k8s/README.md)
 - [Terraform (`/infra`)](infra/README.md)
-- [Fluxo de branches e documentos de apoio](#fluxo-de-branches-e-documentos-de-apoio)
+- [Documentação de desenvolvimento](#documentação-de-desenvolvimento)
 
 ---
 
@@ -253,13 +253,10 @@ Rede AWS reproduzível em [`infra/README.md`](infra/README.md). Requer credencia
 
 ---
 
-## Fluxo de branches e documentos de apoio
+## Documentação de desenvolvimento
 
-- [Convenções de branches e integração](docs/development/gitflow.md)
 - [Padrões de arquitetura e desenvolvimento](docs/development/architecture-standards.md)
 - [Diagnóstico de lacunas e backlog Fase 2](docs/development/gap-e-backlog-fase2.md)
-
-**Manutenção:** integrar trabalho em `develop` via pull request; promover para `main` quando houver uma linha estável (outro PR `develop` → `main`), como referência de entrega.
 
 ### Documentação complementar (Fase 1 e artefatos)
 

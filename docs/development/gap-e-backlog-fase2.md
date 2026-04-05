@@ -29,19 +29,18 @@
 
 ## Backlog fatiado (ordem sugerida)
 
-1. **gitflow-bootstrap**: convenções de branch, template de PR, referência no repositório (esta entrega) - feito
-2. **hexagonal-structure**: reorganização incremental para domain, application, adapters e ports preservando testes - feito
-3. **os-abertura-contract-tests**: revisão de abertura de OS, identificador único e testes de contrato - feito
-4. **os-status-consulta**: consulta de status alinhada à máquina de estados e testes - feito
-5. **orcamento-notificacao-externa**: endpoint idempotente para aprovação ou recusa externa, histórico e validação de transição - feito (`POST /admin/ordens-servico/{id}/orcamento/resposta-externa`, status `CANCELADA` na recusa)
-6. **os-listagem-priorizada**: ordenação EM_EXECUCAO > AGUARDANDO_APROVACAO > EM_DIAGNOSTICO > RECEBIDA; mais antigas primeiro; excluir FINALIZADA e ENTREGUE - feito (exclui também `CANCELADA`; parâmetro `incluirEncerradas`)
-7. **notificacao-email-mailhog**: porta de notificação, adapter SMTP, eventos em transições relevantes, compose atualizado - feito (`NotificacaoOrdemServicoPort`, SMTP/MailHog, `NOTIFICATION_ENABLED`, `docker-compose` com MailHog)
-8. **testes-ampliados**: happy path, erros, estoque, endpoints principais, idempotência - **feito** (incl. `AdminMetricasControllerHttpTest`, `HealthControllerHttpTest`, validações admin OS; integração Docker/Testcontainers opcional local)
-9. **kubernetes**: namespace, deployment, service, ConfigMap, Secret, probes, recursos, HPA, documentação de apply e rollback - feito (`k8s/`, `k8s/README.md`)
-10. **terraform**: módulos ou stacks reproduzíveis, documentação de apply e destroy - feito (`infra/`: rede AWS + **RDS opcional** `enable_rds`, `infra/README.md`, `infra/docs/terraform-vs-enunciado.md`)
-11. **cicd**: **feito** — `ci.yml` (Maven + Terraform + GHCR em push); **Deploy Kubernetes** (`kubectl apply` + rollout + smoke); **Terraform AWS** manual; EKS fora do repo
-12. **ddd-visual-artifacts**: SVG em `docs/ddd/diagrams/` + Domain Storytelling + dicionário tabela + lousa Event Storming — feito; Mermaid em `diagramas.md`; **regenerar PDFs** do portal após alterações
-13. **documentacao-readme-fase2**: README + [`fase2-concluida.md`](../delivery/fase2-concluida.md); **link do vídeo**, PDF no portal e convite **soat-architecture** - [`submission.md`](../delivery/submission.md#checklist-entrega-fase-2)
+1. **hexagonal-structure**: reorganização incremental para domain, application, adapters e ports preservando testes - feito
+2. **os-abertura-contract-tests**: revisão de abertura de OS, identificador único e testes de contrato - feito
+3. **os-status-consulta**: consulta de status alinhada à máquina de estados e testes - feito
+4. **orcamento-notificacao-externa**: endpoint idempotente para aprovação ou recusa externa, histórico e validação de transição - feito (`POST /admin/ordens-servico/{id}/orcamento/resposta-externa`, status `CANCELADA` na recusa)
+5. **os-listagem-priorizada**: ordenação EM_EXECUCAO > AGUARDANDO_APROVACAO > EM_DIAGNOSTICO > RECEBIDA; mais antigas primeiro; excluir FINALIZADA e ENTREGUE - feito (exclui também `CANCELADA`; parâmetro `incluirEncerradas`)
+6. **notificacao-email-mailhog**: porta de notificação, adapter SMTP, eventos em transições relevantes, compose atualizado - feito (`NotificacaoOrdemServicoPort`, SMTP/MailHog, `NOTIFICATION_ENABLED`, `docker-compose` com MailHog)
+7. **testes-ampliados**: happy path, erros, estoque, endpoints principais, idempotência - **feito** (incl. `AdminMetricasControllerHttpTest`, `HealthControllerHttpTest`, validações admin OS; integração Docker/Testcontainers opcional local)
+8. **kubernetes**: namespace, deployment, service, ConfigMap, Secret, probes, recursos, HPA, documentação de apply e rollback - feito (`k8s/`, `k8s/README.md`)
+9. **terraform**: módulos ou stacks reproduzíveis, documentação de apply e destroy - feito (`infra/`: rede AWS + **RDS opcional** `enable_rds`, `infra/README.md`, `infra/docs/terraform-vs-enunciado.md`)
+10. **cicd**: **feito** — `ci.yml` (Maven + Terraform + GHCR em push); **Deploy Kubernetes** (`kubectl apply` + rollout + smoke); **Terraform AWS** manual; EKS fora do repo
+11. **ddd-visual-artifacts**: SVG em `docs/ddd/diagrams/` + Domain Storytelling + dicionário tabela + lousa Event Storming — feito; Mermaid em `diagramas.md`; **regenerar PDFs** do portal após alterações
+12. **documentacao-readme-fase2**: README + [`fase2-concluida.md`](../delivery/fase2-concluida.md); **link do vídeo**, PDF no portal e convite **soat-architecture** - [`submission.md`](../delivery/submission.md#checklist-entrega-fase-2)
 
 ## Riscos e mitigação
 
