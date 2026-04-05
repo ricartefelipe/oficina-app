@@ -12,7 +12,7 @@
 ## Links do projeto
 
 - **Repositório (privado):** https://github.com/ricartefelipe/oficina-springboot-mvp  
-  - **Ramo padrão no GitHub:** `main` (integração em `develop`).
+  - **Branches (nomes no Git):** `main` (estável), `develop` (integração).
   - **Acesso ao avaliador SOAT:** usuário ou equipe **`soat-architecture`** com permissão de leitura (ou conforme o enunciado). Passos: [Convidar o `soat-architecture` no GitHub](#1-convidar-soat-architecture-no-repositório).
 - **Documento para o PDF do portal (Fase 2):** [`entrega-portal-fase2.md`](entrega-portal-fase2.md) - *estrutura alinhada ao enunciário (repo, arquitetura, vídeo, Swagger).*
 - **Swagger (local):** http://localhost:8080/api/swagger-ui/index.html
