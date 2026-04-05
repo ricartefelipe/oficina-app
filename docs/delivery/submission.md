@@ -47,7 +47,7 @@ Artefatos de texto: [índice DDD](../ddd/README.md), [Domain Storytelling](../dd
 
 1. Gera o PDF deste documento (seção [Conversão para PDF](#conversão-para-pdf-offline)).
 2. Inclui no PDF (ou anexos) os **diagramas DDD** referidos em [`docs/ddd/diagramas.md`](../ddd/diagramas.md) e os SVG em [`docs/ddd/diagrams/`](../ddd/diagrams/) se o enunciado pedir evidência visual.
-3. Faz o upload no **portal SOAT** no prazo indicado pelo professor (o assistente não tem acesso ao portal).
+3. Faça o upload no **portal SOAT** no prazo indicado pelo professor (envio manual pelo aluno).
 
 ### 3. Vídeo (≤ 15 minutos)
 

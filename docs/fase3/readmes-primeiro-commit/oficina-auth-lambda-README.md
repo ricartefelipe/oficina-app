@@ -54,4 +54,4 @@ Esta função é invocada pelo **Gateway** (não expõe Swagger próprio). Contr
 
 ## Convite
 
-Adicionar o utilizador **`soat-architecture`** com permissão de leitura (conforme portal SOAT).
+Adicionar o usuário **`soat-architecture`** com permissão de leitura (conforme portal SOAT).

@@ -11,9 +11,9 @@
 
 ## Fase B - Aplicacao
 
-7. Ajustar app para validar JWT emitido pela Lambda (JWKS ou segredo partilhado documentado).
+7. Ajustar app para validar JWT emitido pela Lambda (JWKS ou segredo compartilhado documentado).
 8. Endpoints sensiveis protegidos conforme RFC; rotas publicas mantidas onde o dominio exigir.
-9. Pipelines: **hml** e **prd** com deploy automatico a partir das branches definidas na politica do time.
+9. Pipelines: **develop** e **main** com deploy automatico conforme environments (homologacao / producao).
 
 ## Fase C - Observabilidade
 
@@ -50,4 +50,4 @@ Trabalho que **ja** esta no codigo ou documentacao de `oficina-springboot-mvp` a
 
 **Pendente fora deste repo:** itens 2–4 (Terraform BD/K8s isolados), 6 (API Gateway), 12 (alertas), 13–15 (entrega final e video).
 
-**Pipelines por branch (item 9):** workflows e script `publish-fase3-repos.ps1` no monorepo; após criar os quatro repos, criar branches `hml`/`prd` e configurar GitHub Environments + `KUBE_CONFIG_B64` (ver [`executar-fase3.md`](executar-fase3.md)).
+**Pipelines por branch (item 9):** workflows e script `publish-fase3-repos.ps1` no monorepo; após criar os quatro repos, usar `develop`/`main` e configurar GitHub Environments + `KUBE_CONFIG_B64` (ver [`executar-fase3.md`](executar-fase3.md)).
