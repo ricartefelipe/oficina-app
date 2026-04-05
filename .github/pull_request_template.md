@@ -6,7 +6,7 @@ Uma linha que diga **o quê** muda e **para quê** (valor para quem usa ou opera
 
 ## Contexto
 
-Por que esta alteração existe agora? Relacione com problema, oportunidade ou requisito (sem colar histórico inteiro de chat).
+Por que esta alteração existe agora? Relacione com problema, oportunidade ou requisito.
 
 ---
 
