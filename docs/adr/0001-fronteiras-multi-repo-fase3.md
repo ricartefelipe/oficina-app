@@ -17,7 +17,7 @@ Adotar quatro repositorios com responsabilidades:
 3. **infra-kubernetes**: Terraform para cluster e recursos de plataforma.
 4. **app**: monolito Spring Boot em container no cluster.
 
-A documentacao viva da Fase 3 permanece no repositorio da aplicacao ate a equipe bifurcar repositorios.
+A documentacao viva da Fase 3 permanece no repositorio da aplicacao ate a equipa bifurcar repositorios.
 
 ## Consequencias
 
