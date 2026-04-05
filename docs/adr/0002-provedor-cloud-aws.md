@@ -6,7 +6,7 @@ Proposto (revisar quando houver conta e orcamento)
 
 ## Contexto
 
-E necessario API Gateway, funcao serverless, BD gerido, Kubernetes e integracao com observabilidade. A equipa precisa de um padrao unico para o video e para os professores.
+E necessario API Gateway, funcao serverless, BD gerido, Kubernetes e integracao com observabilidade. A equipe precisa de um padrao unico para o video e para os professores.
 
 ## Decisao
 
