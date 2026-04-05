@@ -1,6 +1,6 @@
 # Fase 2 — Critérios do enunciário atendidos (Tech Challenge)
 
-Este documento consolida **o que o repositório implementa** em relação ao PDF **14SOAT - Fase 2 - Tech Challenge**. Passos só na tua conta (portal, vídeo, `soat-architecture`) estão no [checklist de submissão](submission.md#checklist-entrega-fase-2).
+Este documento consolida **o que o repositório implementa** em relação ao PDF **14SOAT - Fase 2 - Tech Challenge**. Passos só na sua conta (portal, vídeo, `soat-architecture`) estão no [checklist de submissão](submission.md#checklist-entrega-fase-2).
 
 ## Evolução da aplicação
 

@@ -72,7 +72,7 @@ Detalhe do alinhamento ao enunciário (cluster EKS vs. abordagem do repo): [`inf
 3. Consumo das APIs (ex.: Swagger/curl).
 4. Escalabilidade automática (ex.: HPA no cluster ou simulação de carga / múltiplas ordens de serviço).
 
-Roteiro sugerido: [`docs/video-script.md`](../video-script.md) (Fase 1 + secção Fase 2 no mesmo ficheiro).
+Roteiro sugerido: [`docs/video-script.md`](../video-script.md) (Fase 1 + seção Fase 2 no mesmo arquivo).
 
 ---
 
@@ -83,7 +83,7 @@ Com a app em `http://localhost:8080`:
 - **Swagger UI:** http://localhost:8080/api/swagger-ui/index.html  
 - **OpenAPI JSON:** http://localhost:8080/api/openapi  
 
-*(Postman: *Import → Link* com o URL do OpenAPI ou ficheiro exportado.)*
+*(Postman: *Import → Link* com o URL do OpenAPI ou arquivo exportado.)*
 
 ---
 
