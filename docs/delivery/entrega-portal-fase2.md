@@ -11,7 +11,7 @@ Documento para **entrega no portal** (PDF): repositório, `soat-architecture`, a
 
 **URL:** https://github.com/ricartefelipe/oficina-springboot-mvp  
 
-**Ramo padrão no GitHub:** `main` (documentação e código estáveis; integração em `develop`).
+**Branches no repositório (nomes literais):** `main` (estável), `develop` (integração).
 
 **Acesso ao avaliador SOAT:** o repositório deve estar compartilhado com o usuário **`soat-architecture`** (convite em *Settings → Collaborators*).  
 
@@ -72,7 +72,7 @@ Detalhe do alinhamento ao enunciário (cluster EKS vs. abordagem do repo): [`inf
 3. Consumo das APIs (ex.: Swagger/curl).
 4. Escalabilidade automática (ex.: HPA no cluster ou simulação de carga / múltiplas ordens de serviço).
 
-Roteiro sugerido: [`docs/video-script.md`](../video-script.md) (Fase 1 + seção Fase 2 no mesmo arquivo).
+Roteiro sugerido: [`docs/video-script.md`](../video-script.md) (Fase 1 + secção Fase 2 no mesmo ficheiro).
 
 ---
 
@@ -83,7 +83,7 @@ Com a app em `http://localhost:8080`:
 - **Swagger UI:** http://localhost:8080/api/swagger-ui/index.html  
 - **OpenAPI JSON:** http://localhost:8080/api/openapi  
 
-*(Postman: *Import → Link* com o URL do OpenAPI ou arquivo exportado.)*
+*(Postman: *Import → Link* com o URL do OpenAPI ou ficheiro exportado.)*
 
 ---
 

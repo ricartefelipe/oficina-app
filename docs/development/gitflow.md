@@ -1,5 +1,9 @@
 # Fluxo de branches e integração
 
+## Nomes dos branches no Git (padrão da indústria)
+
+No repositório, os **nomes literais** dos branches são **`main`**, **`develop`** e **`feature/...`** (em inglês, como aparecem no `git` e na API do GitHub). **Não** use traduções como nomes de branch (`principal`, `desenvolver`, etc.). Se a interface do GitHub estiver em português, ela pode mostrar rótulos traduzidos; o nome técnico do ref continua sendo `main` ou `develop`.
+
 ## Princípios
 
 - `main` é a linha estável de referência; alterações de trabalho não são feitas diretamente nela.
