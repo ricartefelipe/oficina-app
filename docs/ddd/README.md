@@ -2,7 +2,7 @@
 
 Índice dos artefatos exigidos pelo **Tech Challenge** e **reforçados no feedback** da avaliação da Fase 1.
 
-| Artefato | Conteúdo | Ficheiro |
+| Artefato | Conteúdo | Arquivo |
 |----------|----------|----------|
 | **Domain Storytelling** | História em cenas (atores, motivações, caminhos alternativos) | [domain-storytelling.md](domain-storytelling.md) |
 | **Dicionário de Linguagem Ubíqua** | Tabela termo / definição / o que evitar | [dicionario-linguagem-ubiqua.md](dicionario-linguagem-ubiqua.md) |
@@ -12,7 +12,7 @@
 
 ## Figuras visuais (SVG no repositório)
 
-| Figura | Ficheiro |
+| Figura | Arquivo |
 |--------|----------|
 | Agregado Ordem de Serviço | [diagrams/ordem-servico-agregado.svg](diagrams/ordem-servico-agregado.svg) |
 | Event Storming — contextos | [diagrams/event-storming-contextos.svg](diagrams/event-storming-contextos.svg) |
