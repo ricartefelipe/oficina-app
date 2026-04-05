@@ -12,8 +12,7 @@
 ## Links do projeto
 
 - **Repositório (privado):** https://github.com/ricartefelipe/oficina-springboot-mvp  
-  - **Ramo padrão no GitHub:** `main` (integração em `develop`).
-  - **Acesso ao avaliador SOAT:** usuário ou equipe **`soat-architecture`** com permissão de leitura (ou conforme o enunciado). Passos: [Convidar o `soat-architecture` no GitHub](#1-convidar-soat-architecture-no-repositório).
+  - **Acesso ao avaliador SOAT:** utilizador de organização **`soat-architecture`** com permissão de leitura (ou conforme o enunciado). Passos: [Convidar o utilizador no GitHub](#1-convidar-soat-architecture-no-repositório).
 - **Documento para o PDF do portal (Fase 2):** [`entrega-portal-fase2.md`](entrega-portal-fase2.md) - *estrutura alinhada ao enunciário (repo, arquitetura, vídeo, Swagger).*
 - **Swagger (local):** http://localhost:8080/api/swagger-ui/index.html
 - **Vídeo demonstrativo (≤ 15 min):** o URL público (YouTube ou Vimeo) será o mesmo indicado na tabela **Links rápidos (APIs e vídeo)** do [README](../../README.md) quando estiver publicado.
@@ -33,25 +32,25 @@ Artefatos de texto: [índice DDD](../ddd/README.md), [Domain Storytelling](../dd
 
 ## Checklist entrega Fase 2
 
-*Estes passos dependem da sua conta no GitHub, do portal da disciplina e da gravação do vídeo.*
+*O que só podes fazer na tua conta (GitHub, portal da disciplina, gravação do vídeo). Um assistente automatizado não consegue substituir estes passos.*
 
 ### 1. Convidar `soat-architecture` no repositório
 
 1. Abre https://github.com/ricartefelipe/oficina-springboot-mvp
 2. **Settings** → **Collaborators and teams** (ou **Manage access**)
 3. **Add people** / **Invite a collaborator**
-4. Pesquisa **`soat-architecture`** (usuário ou equipe indicada no enunciado) e envia convite com permissão adequada (normalmente **Read** para revisão).
+4. Pesquisa **`soat-architecture`** (utilizador ou equipa indicada no enunciado) e envia convite com permissão adequada (normalmente **Read** para revisão).
 5. Confirma no e-mail/GitHub que o convite foi aceite (se aplicável).
 
 ### 2. PDF no portal da disciplina
 
-1. Gera o PDF deste documento (seção [Conversão para PDF](#conversão-para-pdf-offline)).
+1. Gera o PDF deste documento (secção [Conversão para PDF](#conversão-para-pdf-offline)).
 2. Inclui no PDF (ou anexos) os **diagramas DDD** referidos em [`docs/ddd/diagramas.md`](../ddd/diagramas.md) e os SVG em [`docs/ddd/diagrams/`](../ddd/diagrams/) se o enunciado pedir evidência visual.
-3. Faça o upload no **portal SOAT** no prazo indicado pelo professor (envio manual pelo aluno).
+3. Faz o upload no **portal SOAT** no prazo indicado pelo professor (o assistente não tem acesso ao portal).
 
 ### 3. Vídeo (≤ 15 minutos)
 
-Roteiro e tópicos obrigatórios: [`docs/video-script.md`](../video-script.md). Após publicar no **YouTube** ou **Vimeo**, atualize o URL no [README](../../README.md) (tabela **Links rápidos**); o documento de portal [`entrega-portal-fase2.md`](entrega-portal-fase2.md) deve refletir o mesmo link na respectiva seção.
+Roteiro e tópicos obrigatórios: [`docs/video-script.md`](../video-script.md). Após publicar no **YouTube** ou **Vimeo**, atualiza o URL no [README](../../README.md) (tabela **Links rápidos**); o documento de portal [`entrega-portal-fase2.md`](entrega-portal-fase2.md) deve refletir o mesmo link na respetiva secção.
 
 ---
 
@@ -59,7 +58,7 @@ Roteiro e tópicos obrigatórios: [`docs/video-script.md`](../video-script.md). 
 
 ### Fase 1 (MVP)
 
-- Reforço pós-feedback do professor: [Domain Storytelling](../ddd/domain-storytelling.md), [Dicionário de linguagem ubíqua](../ddd/dicionario-linguagem-ubiqua.md), Event Storming com [figuras SVG](../ddd/README.md) (incl. lousa com elementos e agregados), além do texto já existente.
+- Reforço pós-feedback do docente: [Domain Storytelling](../ddd/domain-storytelling.md), [Dicionário de linguagem ubíqua](../ddd/dicionario-linguagem-ubiqua.md), Event Storming com [figuras SVG](../ddd/README.md) (incl. lousa com elementos e agregados), além do texto já existente.
 - CRUDs administrativos: clientes, veículos, serviços, peças/insumos (estoque)
 - Ordens de serviço: criação, orçamento automático, transições de estado, listagem e detalhe
 - Consulta pública por `trackingCode` e aprovação de orçamento com validações (CPF/CNPJ)
@@ -139,4 +138,4 @@ Com [Pandoc](https://pandoc.org/) só (sem diagramas rasterizados como acima):
 pandoc docs/delivery/submission.md -o docs/delivery/submission.pdf
 ```
 
-**Sem Pandoc no Windows:** `winget install JohnMacFarlane.Pandoc`, ou abrir este `.md` num editor com pré-visualização Markdown e usar **Imprimir → Salvar como PDF**.
+**Sem Pandoc no Windows:** `winget install JohnMacFarlane.Pandoc`, ou abrir este `.md` num editor com pré-visualização Markdown e usar **Imprimir → Guardar como PDF**.
