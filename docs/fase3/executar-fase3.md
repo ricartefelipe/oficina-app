@@ -72,7 +72,7 @@ Repositórios **Lambda** e **Terraform** apenas rodam **validação CI** nessas 
 
 1. Criar os quatro repositórios (vazios ou com README) na organização ou conta desejada — ou usar `publish-fase3-repos.ps1`.
 2. Adicionar o usuário **`soat-architecture`** com permissão de leitura em **todos** os quatro.
-3. **Branch protection** na branch principal (`main`):
+3. **Branch protection** na branch `main`:
    - Exigir pull request antes do merge.
    - Exigir aprovação de revisão (se aplicável à equipe).
    - Opcional: exigir que os checks de CI passem.
