@@ -55,7 +55,7 @@ Política suportada pelos workflows copiados pelo bootstrap e pelo monólito:
 | Branch | Papel típico | CI | Deploy automático (só **oficina-app**) |
 |--------|----------------|-----|----------------------------------------|
 | `develop` | integração | sim | não |
-| `master` / `main` | linha estável | sim + imagem GHCR | não |
+| `main` | linha estável | sim + imagem GHCR | não |
 | `hml` | homologação | sim + imagem `ghcr.io/...:hml` | sim — ambiente **homologacao** |
 | `prd` | produção | sim + imagem `ghcr.io/...:prd` | sim — ambiente **producao** |
 
@@ -72,7 +72,7 @@ Repositórios **Lambda** e **Terraform** apenas correm **validação CI** nessas
 
 1. Criar os quatro repositórios (vazios ou com README) na organização ou conta desejada — ou usar `publish-fase3-repos.ps1`.
 2. Adicionar o utilizador **`soat-architecture`** com permissão de leitura em **todos** os quatro.
-3. **Branch protection** na branch principal (ex.: `main` ou `master`):
+3. **Branch protection** na branch principal (`main`):
    - Exigir pull request antes do merge.
    - Exigir aprovação de revisão (se aplicável à equipa).
    - Opcional: exigir que os checks de CI passem.
