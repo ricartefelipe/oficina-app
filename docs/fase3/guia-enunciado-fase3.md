@@ -26,7 +26,7 @@ Multiunidades e muitos clientes → **segurança**, **escalabilidade**, **alta d
 3. Terraform **BD gerenciado**  
 4. Aplicação **no Kubernetes**
 
-Regras neste projeto: ramos **`develop`** (integração) e **`master`** (espelho estável, atualizado a partir de `develop`); **só merge via PR**; deploy automático opcional em **Kubernetes** conforme pipelines (ambientes `homologacao` / `producao` no GitHub).
+Regras neste projeto: ramos **`develop`** (integração) e **`main`** (linha estável, atualizada a partir de `develop`); **só merge via PR**; deploy automático opcional em **Kubernetes** conforme pipelines (ambientes `homologacao` / `producao` no GitHub).
 
 ### Infra (nuvem livre)
 

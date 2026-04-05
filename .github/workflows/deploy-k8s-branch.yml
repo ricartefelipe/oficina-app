@@ -1,6 +1,6 @@
-# Corre após o workflow "CI" concluir com sucesso num push a develop ou master (evita deploy antes da imagem no GHCR).
+# Roda após o workflow CI concluir com sucesso em push a develop ou main (evita deploy antes da imagem no GHCR).
 
-name: Deploy Kubernetes (develop / master)
+name: Deploy Kubernetes (develop / main)
 
 on:
   workflow_run:
@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'develop' || github.event.workflow_run.head_branch == 'master') }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'develop' || github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
     environment: ${{ github.event.workflow_run.head_branch == 'develop' && 'homologacao' || 'producao' }}
     permissions:

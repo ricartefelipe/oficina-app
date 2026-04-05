@@ -115,7 +115,7 @@ flowchart LR
 ```
 
 1. **Desenvolvimento local**: `docker compose up --build` - sobe aplicação, PostgreSQL, Keycloak e MailHog (ver secção 4).
-2. **Integração contínua (repositório)**: em cada push a `develop` ou `master`, o workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) executa **build e testes** (`mvn -B -Pci verify`), **validação Terraform** em `infra/` (sem credenciais cloud) e **build/push da imagem Docker** para `ghcr.io/<org>/<repo>`. Em pull requests rodam build e Terraform; **não** há publicação de imagem.
+2. **Integração contínua (repositório)**: em cada push a `develop` ou `main`, o workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) executa **build e testes** (`mvn -B -Pci verify`), **validação Terraform** em `infra/` (sem credenciais cloud) e **build/push da imagem Docker** para `ghcr.io/<org>/<repo>`. Em pull requests rodam build e Terraform; **não** há publicação de imagem.
 3. **Deploy em Kubernetes**: `kubectl apply` conforme [`k8s/README.md`](k8s/README.md) **ou** workflow [`.github/workflows/deploy-kubernetes.yml`](.github/workflows/deploy-kubernetes.yml) (secret **`KUBE_CONFIG_B64`**, rollout e smoke opcionais, imagem opcional). Secret JDBC a partir do RDS Terraform ou outro Postgres: `k8s/secret.example.yaml`.
 4. **Terraform na AWS (workflow manual)**: [`.github/workflows/terraform-aws.yml`](.github/workflows/terraform-aws.yml) - secrets **`AWS_ACCESS_KEY_ID`** e **`AWS_SECRET_ACCESS_KEY`**, `plan`/`apply` e **enable_rds** para RDS (custo). Em alternativa, CLI em [`infra/README.md`](infra/README.md).
 5. **Rede e BD (Terraform)**: `terraform apply` com `enable_rds` conforme necessidade; `terraform destroy` para remover. Contexto do enunciado: [`infra/docs/terraform-vs-enunciado.md`](infra/docs/terraform-vs-enunciado.md).
@@ -239,9 +239,9 @@ O compose inclui **MailHog** para desenvolvimento: interface web em `http://loca
 
 ### CI (GitHub Actions)
 
-O workflow em `.github/workflows/ci.yml` executa `mvn -B -Pci verify` (Java 21), valida **Terraform** em `infra/` (`fmt -check`, `init -backend=false`, `validate`) e, em **push** a `develop`/`master`, constrói e publica a imagem Docker. O perfil Maven `ci` exclui testes que exigem Docker (Testcontainers). Localmente: `mvn -Pci verify`.
+O workflow em `.github/workflows/ci.yml` executa `mvn -B -Pci verify` (Java 21), valida **Terraform** em `infra/` (`fmt -check`, `init -backend=false`, `validate`) e, em **push** a `develop`/`main`, constrói e publica a imagem Docker. O perfil Maven `ci` exclui testes que exigem Docker (Testcontainers). Localmente: `mvn -Pci verify`.
 
-Em cada **push** para `develop` ou `master`, após **Maven e Terraform** passarem, a imagem é publicada no **GitHub Container Registry** (`ghcr.io/<org>/<repo>`) com as tags `latest`, o nome do branch e `sha-<commit>`. Pull requests não publicam imagem. Pacote privado no GHCR pode exigir `imagePullSecrets` ou visibilidade pública.
+Em cada **push** para `develop` ou `main`, após **Maven e Terraform** passarem, a imagem é publicada no **GitHub Container Registry** (`ghcr.io/<org>/<repo>`) com as tags `latest`, o nome do branch e `sha-<commit>`. Pull requests não publicam imagem. Pacote privado no GHCR pode exigir `imagePullSecrets` ou visibilidade pública.
 
 ### Kubernetes
 
@@ -259,7 +259,7 @@ Rede AWS reproduzível em [`infra/README.md`](infra/README.md). Requer credencia
 - [Padrões de arquitetura e desenvolvimento](docs/development/architecture-standards.md)
 - [Diagnóstico de lacunas e backlog Fase 2](docs/development/gap-e-backlog-fase2.md)
 
-**Manutenção:** integrar trabalho em `develop` via pull request; promover para `master` quando houver uma linha estável (outro PR `develop` → `master`), como referência de entrega.
+**Manutenção:** integrar trabalho em `develop` via pull request; promover para `main` quando houver uma linha estável (outro PR `develop` → `main`), como referência de entrega.
 
 ### Documentação complementar (Fase 1 e artefatos)
 
