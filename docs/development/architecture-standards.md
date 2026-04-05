@@ -1,6 +1,6 @@
 # Padrões de arquitetura e desenvolvimento
 
-Este documento fixa o que o repositório trata como **referência normativa**; detalhes de fluxo Git estão em [`gitflow.md`](gitflow.md).
+Este documento fixa o que o repositório trata como **referência normativa**.
 
 ## Fronteiras de camada (DDD no monólito)
 
@@ -31,4 +31,4 @@ Este documento fixa o que o repositório trata como **referência normativa**; d
 ## Convenções de código
 
 - **`.editorconfig`**: UTF-8, indentação consistente, newline final.
-- Mensagens de commit e PRs: descritivas, **sem** metadados de ferramentas ou editores (ver regra em `gitflow.md`).
+- Mensagens de commit e PRs: descrevem a alteração de forma objetiva.
