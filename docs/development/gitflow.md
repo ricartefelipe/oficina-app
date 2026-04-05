@@ -2,7 +2,7 @@
 
 ## Princípios
 
-- `main` e `master` permanecem como referência de releases estáveis; alterações de trabalho não são feitas diretamente nelas.
+- `main` é a linha estável de referência; alterações de trabalho não são feitas diretamente nela.
 - `develop` concentra integração contínua das entregas; trabalho diário converge para `develop` via pull request.
 - Cada entrega coesa fica em branch própria com prefixo `feature/` e nome em kebab-case curto e descritivo.
 - Integração ocorre somente por pull request revisado; não há merge local direto de feature em `develop` fora do fluxo acordado no repositório remoto.
@@ -32,7 +32,7 @@
 
 ## Fase 3 (multi-repositorio)
 
-- Cada um dos **quatro** repositorios deve ter `main` (ou `master`) **protegida**, **sem push direto**; integracao apenas via **Pull Request**.
+- Cada um dos **quatro** repositorios deve ter `main` **protegida**, **sem push direto**; integracao apenas via **Pull Request**.
 - Branches de **homologacao** e **producao** com **deploy automatico** ficam definidas nas pipelines de cada repo (nomes de branch: `develop`, `hml`, `release/*` ou `main` conforme politica acordada).
 - Features neste repositorio (app) seguem: `feature/<nome-kebab>` a partir de `develop` atualizado, PR para `develop`, depois release para `main` quando estavel.
 - Decisoes de fronteira e ordem de deploy estao em [`docs/fase3/backlog-fase3.md`](../fase3/backlog-fase3.md).

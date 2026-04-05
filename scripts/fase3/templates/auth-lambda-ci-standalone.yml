@@ -2,9 +2,9 @@ name: CI (Python)
 
 on:
   push:
-    branches: [main, master, develop, hml, prd]
+    branches: [develop, main, hml, prd]
   pull_request:
-    branches: [main, master, develop, hml, prd]
+    branches: [develop, main, hml, prd]
 
 jobs:
   lint:
