@@ -11,7 +11,9 @@ Documento para **entrega no portal** (PDF): repositório, `soat-architecture`, a
 
 **URL:** https://github.com/ricartefelipe/oficina-springboot-mvp  
 
-**Acesso ao avaliador SOAT:** o repositório deve estar partilhado com o utilizador **`soat-architecture`** (convite em *Settings → Collaborators*).  
+**Ramo padrão no GitHub:** `main` (documentação e código estáveis; integração em `develop`).
+
+**Acesso ao avaliador SOAT:** o repositório deve estar compartilhado com o usuário **`soat-architecture`** (convite em *Settings → Collaborators*).  
 
 **Documentação principal:** [`README.md`](../../README.md) (objetivos Fase 2, arquitetura, fluxo de deploy, execução local, Kubernetes, Terraform, links Swagger/OpenAPI e vídeo). **Critérios vs. enunciário:** [`fase2-concluida.md`](fase2-concluida.md).
 
@@ -28,7 +30,7 @@ Documento para **entrega no portal** (PDF): repositório, `soat-architecture`, a
 
 Diagramas DDD versionados no repositório:
 
-| Figura | Ficheiro no repo |
+| Figura | Arquivo no repositório |
 |--------|------------------|
 | Agregado Ordem de Serviço | [`docs/ddd/diagrams/ordem-servico-agregado.svg`](../ddd/diagrams/ordem-servico-agregado.svg) |
 | Event storming (contextos) | [`docs/ddd/diagrams/event-storming-contextos.svg`](../ddd/diagrams/event-storming-contextos.svg) |
