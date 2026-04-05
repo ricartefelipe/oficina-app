@@ -21,7 +21,7 @@ Para o texto longo com regras e contexto, ver também [ubiquitous-language.md](u
 | **Tracking Code** | Código para **consulta pública** da OS sem JWT de admin. | token, código de barras |
 | **Status da OS** | Estado atual: Recebida, Em diagnóstico, Aguardando aprovação, Em execução, Finalizada, Entregue, Cancelada. | fase, etapa (sem nome do enum) |
 | **Transição de status** | Registo imutável de mudança de status (auditoria e métricas). | log |
-| **Administrador (Admin)** | Utilizador interno com JWT e role **ADMIN**. | operador, staff |
+| **Administrador (Admin)** | Usuário interno com JWT e role **ADMIN**. | operador, staff |
 | **Aprovação do orçamento** | Decisão do cliente (ou integração) que permite entrar em **Em execução** | aceite, OK |
 
 ## Atores e sistemas
