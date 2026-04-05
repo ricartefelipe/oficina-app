@@ -2,7 +2,7 @@
 
 O **Domain Storytelling** descreve o domínio como uma **história** vivida pelos atores, com cenas encadeadas. Complementa o Event Storming e a linguagem ubíqua: aqui o foco é **narrativa** e **motivação** (o “porquê” de cada passo), não só eventos técnicos.
 
-> **Uso acadêmico:** pode ser replicado no **Miro** com ícones simples (pessoa, carro, ferramenta, dinheiro, e-mail) ao lado de cada cena.
+> **Uso académico:** pode ser replicado no **Miro** com ícones simples (pessoa, carro, ferramenta, dinheiro, e-mail) ao lado de cada cena.
 
 ## Personagens
 
@@ -43,7 +43,7 @@ Quando o trabalho termina, Ana **finaliza a execução** e, na retirada do veíc
 
 ## Ligação com outros artefatos DDD
 
-| Artefato | Arquivo |
+| Artefato | Ficheiro |
 |----------|----------|
 | Dicionário de termos | [dicionario-linguagem-ubiqua.md](dicionario-linguagem-ubiqua.md) |
 | Event Storming (comandos, eventos, políticas) | [event-storming.md](event-storming.md) |
