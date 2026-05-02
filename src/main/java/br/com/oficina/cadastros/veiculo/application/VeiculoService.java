@@ -7,6 +7,7 @@ import br.com.oficina.cadastros.veiculo.domain.Veiculo;
 import br.com.oficina.cadastros.veiculo.infra.persistence.VeiculoJpaRepository;
 import br.com.oficina.shared.domain.BusinessRuleException;
 import br.com.oficina.shared.domain.NotFoundException;
+import br.com.oficina.shared.domain.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,22 +59,20 @@ public class VeiculoService {
 
     @Transactional(readOnly = true)
     public Optional<Veiculo> buscarPorPlaca(String placaRaw) {
-        String normalized = br.com.oficina.shared.domain.Strings.alnumUpper(placaRaw);
+        String normalized = Strings.alnumUpper(placaRaw);
         return veiculoRepository.findByPlaca_Value(normalized);
     }
 
     @Transactional
     public Veiculo obterOuCriarPorPlaca(Cliente cliente, String placaRaw, String marca, String modelo, Integer ano) {
         Placa placa = Placa.of(placaRaw);
-        Optional<Veiculo> existing = veiculoRepository.findByPlaca_Value(placa.value());
-        if (existing.isPresent()) {
-            Veiculo v = existing.get();
-            if (!v.getCliente().getId().equals(cliente.getId())) {
-                throw new BusinessRuleException("Placa ja cadastrada para outro cliente");
-            }
-            return v;
-        }
-        Veiculo novo = Veiculo.novo(placa, marca, modelo, ano, cliente);
-        return veiculoRepository.save(novo);
+        return veiculoRepository.findByPlaca_Value(placa.value())
+                .map(v -> {
+                    if (!v.getCliente().getId().equals(cliente.getId())) {
+                        throw new BusinessRuleException("Placa ja cadastrada para outro cliente");
+                    }
+                    return v;
+                })
+                .orElseGet(() -> veiculoRepository.save(Veiculo.novo(placa, marca, modelo, ano, cliente)));
     }
 }
