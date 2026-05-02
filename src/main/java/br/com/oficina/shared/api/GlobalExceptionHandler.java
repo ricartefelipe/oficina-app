@@ -30,9 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ProblemDetail> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setTitle("Validation error");
-        pd.setDetail("Requisicao invalida");
+        ProblemDetail pd = initProblem(HttpStatus.BAD_REQUEST, "Validation error", "Requisicao invalida");
 
         List<Map<String, Object>> errors = new ArrayList<>();
         for (FieldError fe : ex.getBindingResult().getFieldErrors()) {
@@ -49,9 +47,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ProblemDetail> handleConstraintViolation(ConstraintViolationException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setTitle("Validation error");
-        pd.setDetail("Requisicao invalida");
+        ProblemDetail pd = initProblem(HttpStatus.BAD_REQUEST, "Validation error", "Requisicao invalida");
         pd.setProperty("violations", ex.getConstraintViolations().stream().map(v -> Map.of(
                 "path", String.valueOf(v.getPropertyPath()),
                 "message", v.getMessage()
@@ -62,68 +58,59 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ProblemDetail> handleDomainValidation(ValidationException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setTitle("Validation error");
-        pd.setDetail(ex.getMessage());
+        ProblemDetail pd = initProblem(HttpStatus.BAD_REQUEST, "Validation error", ex.getMessage());
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ProblemDetail> handleIllegalArgument(IllegalArgumentException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setTitle("Validation error");
-        pd.setDetail(ex.getMessage());
+        ProblemDetail pd = initProblem(HttpStatus.BAD_REQUEST, "Validation error", ex.getMessage());
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(BusinessRuleException.class)
     public ResponseEntity<ProblemDetail> handleBusinessRule(BusinessRuleException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-        pd.setTitle("Business rule violation");
-        pd.setDetail(ex.getMessage());
+        ProblemDetail pd = initProblem(HttpStatus.CONFLICT, "Business rule violation", ex.getMessage());
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ProblemDetail> handleNotFound(NotFoundException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        pd.setTitle("Not found");
-        pd.setDetail(ex.getMessage());
+        ProblemDetail pd = initProblem(HttpStatus.NOT_FOUND, "Not found", ex.getMessage());
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ProblemDetail> handleDataIntegrity(DataIntegrityViolationException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-        pd.setTitle("Data integrity violation");
-        pd.setDetail("Violacao de integridade de dados");
+        ProblemDetail pd = initProblem(HttpStatus.CONFLICT, "Data integrity violation", "Violacao de integridade de dados");
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ProblemDetail> handleNotReadable(HttpMessageNotReadableException ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pd.setTitle("Malformed request");
-        pd.setDetail("Corpo da requisicao invalido ou malformado");
+        ProblemDetail pd = initProblem(HttpStatus.BAD_REQUEST, "Malformed request", "Corpo da requisicao invalido ou malformado");
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetail> handleGeneric(Exception ex) {
-        // Log interno com stacktrace para diagnostico, mas resposta nao vaza detalhe
         log.error("Unhandled error", ex);
-
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        pd.setTitle("Internal error");
-        pd.setDetail("Erro interno");
+        ProblemDetail pd = initProblem(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error", "Erro interno");
         enrich(pd);
         return ResponseEntity.status(pd.getStatus()).body(pd);
+    }
+
+    private static ProblemDetail initProblem(HttpStatus status, String title, String detail) {
+        ProblemDetail pd = ProblemDetail.forStatus(status);
+        pd.setTitle(title);
+        pd.setDetail(detail);
+        return pd;
     }
 
     private static void enrich(ProblemDetail pd) {

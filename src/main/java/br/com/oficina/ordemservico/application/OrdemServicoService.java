@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -214,12 +213,15 @@ public class OrdemServicoService {
             throw new ValidationException("Idempotency-Key deve ter no maximo 128 caracteres");
         }
 
-        Optional<OsOrcamentoRespostaIdempotencia> jaRegistrado = orcamentoRespostaIdempotenciaRepository.findByIdempotencyKey(key);
-        if (jaRegistrado.isPresent()) {
-            validarMesmaOperacaoIdempotente(osId, decisao, jaRegistrado.get());
-            return obterDetalhe(osId);
-        }
+        return orcamentoRespostaIdempotenciaRepository.findByIdempotencyKey(key)
+                .map(row -> {
+                    validarMesmaOperacaoIdempotente(osId, decisao, row);
+                    return obterDetalhe(osId);
+                })
+                .orElseGet(() -> registrarNovaRespostaOrcamentoExterna(osId, key, decisao));
+    }
 
+    private OrdemServico registrarNovaRespostaOrcamentoExterna(UUID osId, String key, DecisaoRespostaOrcamentoExterna decisao) {
         OrdemServico os = ordemServicoPersistence.findDetailedByIdForUpdate(osId)
                 .orElseThrow(() -> new NotFoundException("Ordem de Servico nao encontrada"));
 
