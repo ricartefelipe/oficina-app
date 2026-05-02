@@ -1,13 +1,14 @@
 package br.com.oficina.shared.security;
 
+import br.com.oficina.shared.infra.jackson.FallbackObjectMapperConfig;
 import br.com.oficina.cadastros.cliente.api.admin.AdminClienteController;
 import br.com.oficina.cadastros.cliente.application.ClienteService;
-import br.com.oficina.cadastros.cliente.domain.Cliente;
+import br.com.oficina.cadastros.cliente.infra.persistence.ClienteJpaRepository;
 import br.com.oficina.support.KeycloakJwtRequestPostProcessor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
@@ -15,6 +16,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * sem subir PostgreSQL (corre no perfil {@code ci}).
  */
 @WebMvcTest(controllers = AdminClienteController.class)
-@Import({SecurityConfig.class, AdminJwtSecurityWebMvcTest.ClienteServiceStubConfig.class})
+@Import({SecurityConfig.class, AdminJwtSecurityWebMvcTest.ClienteServiceStubConfig.class, FallbackObjectMapperConfig.class})
 @EnableConfigurationProperties({SecurityJwtProperties.class, SecurityCpfJwtProperties.class})
 @TestPropertySource(properties = {
         "security.jwt.jwk-set-uri=http://localhost/dummy",
@@ -59,19 +63,16 @@ class AdminJwtSecurityWebMvcTest {
     }
 
     /**
-     * Stub sem Mockito (compatível com JDK 21+ onde inline mock pode falhar).
+     * Repositório mockado para não inicializar JPA/Hibernate na fatia {@code @WebMvcTest}.
      */
     static class ClienteServiceStubConfig {
 
         @Bean
         @Primary
         ClienteService clienteServiceStub() {
-            return new ClienteService(null) {
-                @Override
-                public List<Cliente> listar() {
-                    return List.of();
-                }
-            };
+            ClienteJpaRepository repo = mock(ClienteJpaRepository.class);
+            when(repo.findAll()).thenReturn(List.of());
+            return new ClienteService(repo);
         }
     }
 }
