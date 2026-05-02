@@ -1,12 +1,13 @@
 package br.com.oficina.cpf.api;
 
+import br.com.oficina.shared.infra.jackson.FallbackObjectMapperConfig;
 import br.com.oficina.shared.security.SecurityConfig;
 import br.com.oficina.shared.security.SecurityCpfJwtProperties;
 import br.com.oficina.shared.security.SecurityJwtProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.TestPropertySource;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ClienteSessaoController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, FallbackObjectMapperConfig.class})
 @EnableConfigurationProperties({SecurityJwtProperties.class, SecurityCpfJwtProperties.class})
 @TestPropertySource(properties = {
         "security.jwt.jwk-set-uri=http://localhost/dummy",
