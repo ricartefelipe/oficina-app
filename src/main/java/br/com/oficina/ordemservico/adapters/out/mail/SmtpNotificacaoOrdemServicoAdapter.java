@@ -2,10 +2,12 @@ package br.com.oficina.ordemservico.adapters.out.mail;
 
 import br.com.oficina.ordemservico.application.port.NotificacaoOrdemServicoPort;
 import br.com.oficina.ordemservico.domain.OrdemServico;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -107,7 +109,7 @@ public class SmtpNotificacaoOrdemServicoAdapter implements NotificacaoOrdemServi
             helper.setText(corpoTexto, false);
             mailSender.send(message);
             log.info("email_notificacao_enviado assunto={} para={}", assunto, props.getDefaultRecipient());
-        } catch (Exception e) {
+        } catch (MessagingException | MailException e) {
             log.warn("email_notificacao_falhou assunto={}", assunto, e);
         }
     }
