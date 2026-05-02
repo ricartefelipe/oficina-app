@@ -297,7 +297,7 @@ public class OrdemServicoService {
     private void notificarSeguro(Consumer<NotificacaoOrdemServicoPort> acao) {
         try {
             acao.accept(notificacaoOrdemServicoPort);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.warn("notificacao_ordem_servico_falhou", e);
         }
     }

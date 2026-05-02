@@ -14,17 +14,21 @@ public class NoopNotificacaoOrdemServicoAdapter implements NotificacaoOrdemServi
 
     @Override
     public void aoEnviarOrcamento(OrdemServico os) {
+        // envio desabilitado (app.notification.enabled=false)
     }
 
     @Override
     public void aoOrcamentoAprovado(OrdemServico os) {
+        // envio desabilitado (app.notification.enabled=false)
     }
 
     @Override
     public void aoOrcamentoRecusado(OrdemServico os) {
+        // envio desabilitado (app.notification.enabled=false)
     }
 
     @Override
     public void aoVeiculoEntregue(OrdemServico os) {
+        // envio desabilitado (app.notification.enabled=false)
     }
 }
