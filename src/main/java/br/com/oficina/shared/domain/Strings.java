@@ -1,8 +1,13 @@
 package br.com.oficina.shared.domain;
 
 import java.text.Normalizer;
+import java.util.regex.Pattern;
 
 public final class Strings {
+
+    private static final Pattern NON_DIGITS = Pattern.compile("\\D");
+    private static final Pattern DIACRITIC_MARKS = Pattern.compile("\\p{M}");
+    private static final Pattern NON_ALPHANUMERIC = Pattern.compile("[^A-Za-z0-9]");
 
     private Strings() {
     }
@@ -21,7 +26,7 @@ public final class Strings {
         if (value == null) {
             return "";
         }
-        return value.replaceAll("\\D", "");
+        return NON_DIGITS.matcher(value).replaceAll("");
     }
 
     /**
@@ -31,8 +36,8 @@ public final class Strings {
         if (value == null) {
             return "";
         }
-        String normalized = Normalizer.normalize(value, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}", "");
-        return normalized.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
+        String normalized = Normalizer.normalize(value, Normalizer.Form.NFD);
+        normalized = DIACRITIC_MARKS.matcher(normalized).replaceAll("");
+        return NON_ALPHANUMERIC.matcher(normalized).replaceAll("").toUpperCase();
     }
 }

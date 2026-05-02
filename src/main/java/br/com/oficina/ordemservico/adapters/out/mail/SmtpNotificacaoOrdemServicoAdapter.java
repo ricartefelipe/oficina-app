@@ -95,8 +95,20 @@ public class SmtpNotificacaoOrdemServicoAdapter implements NotificacaoOrdemServi
     }
 
     private String linkPublico(OrdemServico os) {
-        String base = props.getPublicBaseUrl().replaceAll("/$", "");
+        String base = stripTrailingSlash(props.getPublicBaseUrl());
         return base + "/ordens-servico/" + os.getTrackingCode();
+    }
+
+    /** Remove barras finais repetidas sem compilar regex a cada chamada. */
+    private static String stripTrailingSlash(String raw) {
+        if (raw == null || raw.isEmpty()) {
+            return raw == null ? "" : raw;
+        }
+        String s = raw;
+        while (s.endsWith("/")) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s;
     }
 
     private void enviar(String assunto, String corpoTexto) {
