@@ -1,4 +1,4 @@
-# Oficina Service - Tech Challenge (Fases 1 e 2) - Back-end Spring Boot
+# Oficina Service - Tech Challenge (Fases 1, 2 e 3) - Back-end Spring Boot
 
 Monólito do **Sistema Integrado de Atendimento e Execução de Serviços** para oficina mecânica: gestão de clientes, veículos, catálogo, peças/estoque e **ordens de serviço (OS)** com fluxo completo, consulta pública por `trackingCode`, JWT (Keycloak) e notificações por e-mail.
 
