@@ -1,0 +1,65 @@
+# Deploy na AWS: Lambda auth CPF + API Gateway HTTP (Terraform).
+# Pré-requisito: OIDC — secret AWS_ROLE_ARN (ver docs/fase3/aws-oidc-github.md).
+# Segredos no repositório (Settings → Secrets → Actions):
+#   AUTH_LAMBDA_PG_HOST, AUTH_LAMBDA_PG_USER, AUTH_LAMBDA_PG_PASSWORD
+#   AUTH_LAMBDA_JWT_SECRET — obrigatório (mesmo da app Spring)
+# Banco: nome fixo "oficina" no Terraform (ajuste em variables.tf / tfvars local se precisar).
+
+name: Deploy auth Lambda AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      aws_region:
+        description: Região AWS
+        required: true
+        default: sa-east-1
+
+env:
+  TF_VAR_aws_region: ${{ github.event.inputs.aws_region }}
+  TF_VAR_lambda_zip_path: ${{ github.workspace }}/auth-lambda/dist/function.zip
+  TF_VAR_project_name: oficina
+  TF_VAR_pg_host: ${{ secrets.AUTH_LAMBDA_PG_HOST }}
+  TF_VAR_pg_user: ${{ secrets.AUTH_LAMBDA_PG_USER }}
+  TF_VAR_pg_password: ${{ secrets.AUTH_LAMBDA_PG_PASSWORD }}
+  TF_VAR_jwt_secret: ${{ secrets.AUTH_LAMBDA_JWT_SECRET }}
+  TF_VAR_jwt_issuer: https://oficina.local/auth/cpf
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build Lambda ZIP
+        run: chmod +x auth-lambda/build-zip.sh && ./auth-lambda/build-zip.sh
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ github.event.inputs.aws_region }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform Init
+        working-directory: infra/terraform/aws-auth-lambda
+        run: terraform init -input=false
+
+      - name: Terraform Apply
+        working-directory: infra/terraform/aws-auth-lambda
+        run: terraform apply -auto-approve -input=false
+
+      - name: Outputs
+        working-directory: infra/terraform/aws-auth-lambda
+        run: terraform output -no-color

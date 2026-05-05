@@ -10,7 +10,7 @@ A **Fase 3** pede **mais quatro coisas** em cima disso: **4 repositórios**, **c
 | # | O que é | Estado típico no seu projeto |
 |---|---------|------------------------------|
 | A | **4 repos** (Lambda, Terraform K8s, Terraform BD, App) com CI/CD | Repositórios existem; CI em execução; Terraform BD com **plan** OK (chaves IAM). |
-| B | **API Gateway** + **Lambda** (CPF → JWT) + rotas protegidas na app | Lambda em `auth-lambda/`; **Gateway na AWS** = falta **criar na conta** (ver snippet Terraform em [`terraform-snippet-api-gateway.tf`](terraform-snippet-api-gateway.tf)). |
+| B | **API Gateway** + **Lambda** (CPF → JWT) + rotas protegidas na app | Código em `auth-lambda/`; Terraform em [`infra/terraform/aws-auth-lambda/README.md`](../../infra/terraform/aws-auth-lambda/README.md) + workflow **Deploy auth Lambda AWS**. |
 | C | **BD gerenciado** + **Kubernetes** (Terraform) | Código em `infra/`; **RDS/cluster reais** = `terraform apply` + custos. |
 | D | **Observabilidade** (métricas, logs JSON, dashboards, **alertas** OS) | Prometheus + logs no app; **dashboards/alertas na ferramenta** = Grafana/console + regras (ver [`observabilidade-prometheus.md`](observabilidade-prometheus.md)). |
 | E | **Documentação** (diagramas, RFC, ADR, ER BD) | Grande parte em `docs/`; **revisar** e juntar no PDF. |
@@ -47,7 +47,7 @@ A **Fase 3** pede **mais quatro coisas** em cima disso: **4 repositórios**, **c
 | Visão e diagramas | [`visao-arquitetura-fase3.md`](visao-arquitetura-fase3.md) |
 | OIDC / secrets | [`aws-oidc-github.md`](aws-oidc-github.md) |
 | Prometheus / Grafana | [`observabilidade-prometheus.md`](observabilidade-prometheus.md) |
-| Snippet API Gateway (Terraform) | [`terraform-snippet-api-gateway.tf`](terraform-snippet-api-gateway.tf) |
+| Terraform Lambda + HTTP API | [`infra/terraform/aws-auth-lambda/`](../../infra/terraform/aws-auth-lambda/) |
 
 ---
 

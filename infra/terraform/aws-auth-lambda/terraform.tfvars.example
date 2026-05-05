@@ -1,0 +1,17 @@
+# Copie para terraform.tfvars (não commite).
+aws_region       = "sa-east-1"
+project_name     = "oficina"
+lambda_zip_path  = "../../../auth-lambda/dist/function.zip"
+
+pg_host     = "seu-rds.xxxxx.sa-east-1.rds.amazonaws.com"
+pg_port     = 5432
+pg_database = "oficina"
+pg_user     = "oficina"
+pg_password = "defina-localmente"
+
+jwt_issuer = "https://oficina.local/auth/cpf"
+jwt_secret = "mesmo-valor-de-JWT_CPF_SECRET-na-app"
+
+# Opcional: Lambda na VPC para alcançar RDS privado
+# lambda_subnet_ids         = ["subnet-aaa", "subnet-bbb"]
+# lambda_security_group_ids = ["sg-ccc"]
