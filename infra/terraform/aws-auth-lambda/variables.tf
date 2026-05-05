@@ -18,6 +18,11 @@ variable "lambda_zip_path" {
 variable "pg_host" {
   type        = string
   description = "Host PostgreSQL (RDS ou IP público de laboratório)"
+
+  validation {
+    condition     = length(trimspace(var.pg_host)) > 0
+    error_message = "pg_host nao pode ser vazio."
+  }
 }
 
 variable "pg_port" {
@@ -53,6 +58,11 @@ variable "jwt_secret" {
   type        = string
   description = "Mesmo segredo HS256 da app (JWT_CPF_SECRET / security.cpf-jwt.secret)"
   sensitive   = true
+
+  validation {
+    condition     = length(var.jwt_secret) >= 16
+    error_message = "jwt_secret deve ter pelo menos 16 caracteres."
+  }
 }
 
 variable "jwt_expiration_seconds" {
