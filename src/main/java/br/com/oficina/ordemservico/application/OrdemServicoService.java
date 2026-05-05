@@ -106,7 +106,7 @@ public class OrdemServicoService {
             }
         }
 
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         observability.registrarOsCriada();
         log.info("os_criada osId={} trackingCode={} status={} orcamentoTotal={}", saved.getId(), saved.getTrackingCode(), saved.getStatus(), saved.getOrcamentoTotal());
         return saved;
@@ -156,7 +156,7 @@ public class OrdemServicoService {
     public OrdemServico iniciarDiagnostico(UUID osId) {
         OrdemServico os = carregarDetalheParaMutacao(osId);
         os.iniciarDiagnostico();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("os_status_alterado osId={} status={}", saved.getId(), saved.getStatus());
         return saved;
     }
@@ -165,7 +165,7 @@ public class OrdemServicoService {
     public OrdemServico enviarOrcamento(UUID osId) {
         OrdemServico os = carregarDetalheParaMutacao(osId);
         os.enviarOrcamento();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("orcamento_enviado osId={} trackingCode={} orcamentoTotal={}", saved.getId(), saved.getTrackingCode(), saved.getOrcamentoTotal());
         notificarSeguro(n -> n.aoEnviarOrcamento(saved));
         return saved;
@@ -175,7 +175,7 @@ public class OrdemServicoService {
     public OrdemServico finalizarExecucao(UUID osId) {
         OrdemServico os = carregarDetalheParaMutacao(osId);
         os.finalizarExecucao();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("os_status_alterado osId={} status={}", saved.getId(), saved.getStatus());
         return saved;
     }
@@ -184,7 +184,7 @@ public class OrdemServicoService {
     public OrdemServico registrarEntrega(UUID osId) {
         OrdemServico os = carregarDetalheParaMutacao(osId);
         os.registrarEntrega();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("os_status_alterado osId={} status={}", saved.getId(), saved.getStatus());
         notificarSeguro(n -> n.aoVeiculoEntregue(saved));
         return saved;
@@ -244,7 +244,7 @@ public class OrdemServicoService {
         }
 
         os.recusarOrcamento();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("orcamento_recusado_externo osId={} trackingCode={} status={}", saved.getId(), saved.getTrackingCode(), saved.getStatus());
         notificarSeguro(n -> n.aoOrcamentoRecusado(saved));
         return saved;
@@ -279,7 +279,7 @@ public class OrdemServicoService {
         }
 
         os.aprovarOrcamento();
-        OrdemServico saved = ordemServicoPersistence.save(os);
+        OrdemServico saved = salvarOrdem(os);
         log.info("orcamento_aprovado osId={} trackingCode={} status={}", saved.getId(), saved.getTrackingCode(), saved.getStatus());
         notificarSeguro(n -> n.aoOrcamentoAprovado(saved));
         return saved;
@@ -296,10 +296,17 @@ public class OrdemServicoService {
                 .orElseThrow(() -> new NotFoundException("Ordem de Servico nao encontrada"));
     }
 
+    private OrdemServico salvarOrdem(OrdemServico os) {
+        OrdemServico saved = ordemServicoPersistence.save(os);
+        observability.registrarFluxoStatus(saved);
+        return saved;
+    }
+
     private void notificarSeguro(Consumer<NotificacaoOrdemServicoPort> acao) {
         try {
             acao.accept(notificacaoOrdemServicoPort);
         } catch (RuntimeException e) {
+            observability.registrarNotificacaoFalha();
             log.warn("notificacao_ordem_servico_falhou", e);
         }
     }
