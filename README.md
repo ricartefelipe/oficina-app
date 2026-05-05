@@ -20,11 +20,15 @@ Conforme o enunciário: **repositório** atualizado (código, `/k8s`, `/infra`, 
 
 | Documento | Uso |
 |-----------|-----|
-| [**Entrega PDF - portal (Fase 2)**](docs/delivery/entrega-portal-fase2.md) | Conteúdo Markdown; **PDF pronto:** [`docs/delivery/entrega-portal-fase2.pdf`](docs/delivery/entrega-portal-fase2.pdf) (submeter no portal). |
+| [**Entrega PDF — portal (Fase 2)**](docs/delivery/entrega-portal-fase2.md) | Markdown para PDF; **PDF exemplo:** [`docs/delivery/entrega-portal-fase2.pdf`](docs/delivery/entrega-portal-fase2.pdf). |
+| [**Entrega PDF — portal (Fase 3)**](docs/delivery/entrega-portal-fase3.md) | Markdown para PDF da **Fase 3**; gerar `docs/delivery/entrega-portal-fase3.pdf` (submeter no portal). |
 | [Submissão / checklist](docs/delivery/submission.md) | Documento longo; **PDF pronto:** [`docs/delivery/submission.pdf`](docs/delivery/submission.pdf). |
-| [Roteiro do vídeo](docs/video-script.md) | Inclui blocos **Fase 2** obrigatórios no início do ficheiro. |
+| [Roteiro do vídeo](docs/video-script.md) | Blocos Fase 2 + complementos para demo na Fase 3. |
 
-Para **voltar a gerar** os PDFs após editar o Markdown: `.\scripts\delivery\md-to-pdf-edge.ps1 -InputMd "docs\delivery\entrega-portal-fase2.md"` (e o mesmo com `submission.md`). Requer **Pandoc** e **Microsoft Edge** no Windows.
+Para **voltar a gerar** os PDFs após editar o Markdown:  
+`.\scripts\delivery\md-to-pdf-edge.ps1 -InputMd "docs\delivery\entrega-portal-fase2.md"`  
+ou `.\scripts\delivery\md-to-pdf-edge.ps1 -InputMd "docs\delivery\entrega-portal-fase3.md"`  
+(e o mesmo com `submission.md`). Requer **Pandoc** e **Microsoft Edge** no Windows.
 
 ---
 

@@ -22,10 +22,12 @@ Requisitos oficiais: documento **Tech Challenge - Fase 3** (disciplina SOAT).
 | [../development/architecture-standards.md](../development/architecture-standards.md) | Padrões de camadas, testes ArchUnit, qualidade |
 | [../adr/README.md](../adr/README.md) | ADRs (decisoes arquiteturais permanentes) |
 | [rfc/rfc-0001-autenticacao-cpf-jwt-serverless.md](rfc/rfc-0001-autenticacao-cpf-jwt-serverless.md) | RFC: fluxo de autenticacao e contratos |
+| [../delivery/entrega-portal-fase3.md](../delivery/entrega-portal-fase3.md) | PDF portal — entrega ao professor (mesmo padrao da Fase 2) |
+| [entrega-portal-fase3.md](entrega-portal-fase3.md) | Atalho para o documento completo em `docs/delivery/` |
 
 ## Relacao com o codigo atual
 
-O repositorio **oficina-springboot-mvp** evolui para o **repositorio da aplicacao principal** (container no Kubernetes). Os outros tres repositorios sao **novos** (Lambda, Terraform K8s, Terraform BD). A divisao exata e o momento do extracao estao no [backlog](backlog-fase3.md).
+O repositorio da aplicacao principal e **`ricartefelipe/oficina-app`** (evolucao do MVP das fases anteriores). Os outros tres repositorios correspondem a **Lambda**, **Terraform BD** e **Terraform K8s**. A divisao exata e o momento da extracacao estao no [backlog](backlog-fase3.md).
 
 ## Implementacao iniciada (neste mono-repo)
 

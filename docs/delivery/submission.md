@@ -123,6 +123,16 @@ mvn verify
 ./scripts/security/run-security-scans.sh
 ```
 
+---
+
+## Fase 3 — Tech Challenge (operacao corporativa)
+
+- **PDF para o portal (estrutura igual à Fase 2):** [`docs/delivery/entrega-portal-fase3.md`](entrega-portal-fase3.md) → gerar **`entrega-portal-fase3.pdf`** com o mesmo script Edge/Pandoc, alterando o `-InputMd`.
+- **Checklist técnico vs. enunciário:** [`docs/delivery/fase3-concluida.md`](fase3-concluida.md).
+- **Índice arquitetura Fase 3:** [`docs/fase3/README.md`](../fase3/README.md).
+
+Passos manuais (portal, vídeo, convite `soat-architecture`, cost AWS): descritos em [`entrega-portal-fase3.md`](entrega-portal-fase3.md).
+
 ## Conversão para PDF (offline)
 
 **Recomendado (Windows, PDF com diagramas embutidos):** na raiz do repositório:
