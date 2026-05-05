@@ -44,6 +44,23 @@ pip install -r requirements-dev.txt
 pytest -q
 ```
 
+## Deploy na AWS (Terraform)
+
+Na raiz do repositório:
+
+```bash
+./auth-lambda/build-zip.sh
+cd infra/terraform/aws-auth-lambda
+cp terraform.tfvars.example terraform.tfvars   # editar host RDS, senhas, jwt_secret
+terraform init && terraform apply
+```
+
+Saída **`token_url`**: `POST` com `{"cpfCnpj":"..."}`.
+
+Ou use o workflow manual **Deploy auth Lambda AWS** (GitHub Actions): configure **`AWS_ROLE_ARN`** (OIDC) e segredos **`AUTH_LAMBDA_PG_*`**, **`AUTH_LAMBDA_JWT_SECRET`** — ver `.github/workflows/deploy-auth-lambda-aws.yml`.
+
+A Lambda precisa **alcançar o Postgres** (RDS público em laboratório ou Lambda em VPC + subnets/SGs).
+
 ## Repositório separado (gitflow)
 
 Este diretório pode ser copiado para o repositório **`oficina-auth-lambda`** com CI próprio; ver `scripts/fase3/bootstrap-repos.ps1` e `docs/fase3/executar-fase3.md`.
