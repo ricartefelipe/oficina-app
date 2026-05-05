@@ -33,7 +33,7 @@ O repositorio **oficina-springboot-mvp** evolui para o **repositorio da aplicaca
 |------|--------|
 | JWT com **issuer** do fluxo CPF (HS256) + coexistencia Keycloak | `security.cpf-jwt` em `application.yml`; `MultiIssuerJwtDecoder` |
 | API **GET /api/cliente/sessao** (protegida `ROLE_CLIENTE`) | `br.com.oficina.cpf.api.ClienteSessaoController` |
-| Funcao **Python** (validacao CPF/CNPJ, consulta `clientes`, JWT HS256) | `auth-lambda/` |
+| Funcao **Python** + **Terraform AWS** (Lambda + HTTP API `POST /token`) | `auth-lambda/`, `infra/terraform/aws-auth-lambda/` |
 | CI workflow Python | `.github/workflows/auth-lambda-ci.yml` |
 | **Cliente.status** (`ATIVO`/`INATIVO`) + Lambda devolve `cliente_status` | Liquibase `0005`; `auth-lambda` |
 | **Prometheus** + contador `oficina.os.criadas`; perfil **`k8s`** (logs JSON) | `micrometer-registry-prometheus`; `logback-spring.xml` |
