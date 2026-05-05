@@ -1,0 +1,37 @@
+name: CI auth-lambda (Python)
+
+on:
+  push:
+    branches: [develop, main]
+    paths:
+      - "auth-lambda/**"
+      - ".github/workflows/auth-lambda-ci.yml"
+  pull_request:
+    branches: [develop, main]
+    paths:
+      - "auth-lambda/**"
+      - ".github/workflows/auth-lambda-ci.yml"
+
+defaults:
+  run:
+    working-directory: auth-lambda
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+
+      - name: Syntax check
+        run: python -m compileall -q .
+
+      - name: Tests
+        run: pytest -q
