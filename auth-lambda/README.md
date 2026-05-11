@@ -51,7 +51,7 @@ Na raiz do repositório:
 ```bash
 ./auth-lambda/build-zip.sh
 cd infra/terraform/aws-auth-lambda
-cp terraform.tfvars.example terraform.tfvars   # editar host RDS, senhas, jwt_secret
+cp terraform.tfvars.example terraform.tfvars   # editar host RDS e credenciais
 terraform init && terraform apply
 ```
 
