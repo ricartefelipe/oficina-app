@@ -31,7 +31,8 @@ Definir decisoes de seguranca e trade-offs do MVP, alinhado ao enunciado.
 - **Fonte de verdade de versoes:** `spring-boot-starter-parent` (BOM) - atualizar **minor/patch** do Spring Boot para absorver correcoes em Logback, Tomcat, Spring Framework, drivers, etc.
 - **Excecoes:** apenas versoes declaradas no `pom.xml` quando nao geridas pelo BOM (ex.: `springdoc`, `logstash-logback-encoder`, Testcontainers) ou override pontual documentado.
 - **SCA (Mend, OWASP Dependency-Check, Trivy):** reexecutar apos upgrades; alertas "Insufficient Information" ou falsos positivos exigem triagem manual.
-- **CI:** `mvn -Pci verify` alinha com exclusao de testes que exigem Docker local; o repositorio usa **Dependabot** (`.github/dependabot.yml`) para propor PRs de atualizacao.
+- **CI:** `mvn -Pci verify` alinha com exclusao de testes que exigem Docker local.
+- **Atualizacao de libs:** mediante PR da equipa, apos revisar SCA (Mend/Trivy/Dependency-Check) e plano de testes.
 
 ## Trade-offs do MVP
 - Keycloak adiciona peso ao docker-compose, mas entrega um fluxo realista de JWT/roles.
