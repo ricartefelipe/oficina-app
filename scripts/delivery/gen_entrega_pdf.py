@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Gera PDF da entrega Fase 3 a partir do Markdown (fpdf2)."""
+"""Gera PDF de entrega a partir de Markdown (fpdf2)."""
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -41,14 +42,7 @@ class Doc(FPDF):
         self.cell(0, 10, f"Pagina {self.page_no()}", align="C")
 
 
-def main() -> int:
-    base = Path(__file__).resolve().parents[2]
-    md_path = base / "docs/delivery/entrega-portal-fase3.md"
-    pdf_path = base / "docs/delivery/entrega-portal-fase3.pdf"
-    if not md_path.exists():
-        print(f"Arquivo nao encontrado: {md_path}", file=sys.stderr)
-        return 1
-
+def render_md_to_pdf(md_path: Path, pdf_path: Path) -> None:
     pdf = Doc()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
@@ -77,6 +71,34 @@ def main() -> int:
             pdf.multi_cell(width, 5, line)
 
     pdf.output(str(pdf_path))
+
+
+def main() -> int:
+    base = Path(__file__).resolve().parents[2]
+    parser = argparse.ArgumentParser(description="Gera PDF a partir de Markdown de entrega")
+    parser.add_argument(
+        "markdown",
+        nargs="?",
+        default=str(base / "docs/delivery/entrega-portal-fase3.md"),
+        help="Arquivo .md de entrada",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Arquivo .pdf de saida (padrao: mesmo nome do .md com extensao .pdf)",
+    )
+    args = parser.parse_args()
+
+    md_path = Path(args.markdown)
+    if not md_path.is_absolute():
+        md_path = base / md_path
+    pdf_path = Path(args.output) if args.output else md_path.with_suffix(".pdf")
+
+    if not md_path.exists():
+        print(f"Arquivo nao encontrado: {md_path}", file=sys.stderr)
+        return 1
+
+    render_md_to_pdf(md_path, pdf_path)
     print(f"PDF gerado: {pdf_path}")
     return 0
 
