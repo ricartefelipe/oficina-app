@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/changes/0004-os-orcamento-resposta-idempotencia.yaml
   - include:
       file: db/changelog/changes/0005-cliente-status-fase3.yaml
+  - include:
+      file: db/changelog/changes/0006-seed-cliente-demo-fase3.yaml

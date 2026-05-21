@@ -52,8 +52,14 @@ jobs:
         run: |
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/platform/traefik.yaml
+          kubectl apply -f k8s/postgres.yaml
+          kubectl apply -f k8s/auth-lambda.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/platform/prometheus.yaml
+          kubectl apply -f k8s/platform/grafana.yaml
+          kubectl apply -f k8s/ingress.yaml
           kubectl apply -f k8s/hpa.yaml
 
       - name: Atualizar imagem do Deployment (opcional)
@@ -75,5 +81,5 @@ jobs:
           kubectl -n oficina port-forward svc/oficina-app 18080:8080 &
           PF_PID=$!
           sleep 5
-          curl -fsS --retry 10 --retry-delay 3 --retry-connrefused "http://127.0.0.1:18080/actuator/health/liveness"
+          curl -fsS --retry 10 --retry-delay 3 --retry-connrefused "http://127.0.0.1:18080/api/actuator/health/liveness"
           kill $PF_PID 2>/dev/null || true

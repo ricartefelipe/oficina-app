@@ -1,5 +1,6 @@
 /target/
 **/target/
+/docker-dist/
 
 # IDEs (ignorar .idea exceto run configurations Maven versionadas)
 .idea/*
