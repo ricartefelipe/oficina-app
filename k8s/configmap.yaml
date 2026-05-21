@@ -7,12 +7,12 @@ metadata:
     app.kubernetes.io/name: oficina-app
     app.kubernetes.io/component: api
 data:
-  SPRING_PROFILES_ACTIVE: "prod"
-  MAIL_HOST: "mailhog"
+  SPRING_PROFILES_ACTIVE: "prod,k8s"
+  MAIL_HOST: "localhost"
   MAIL_PORT: "1025"
-  NOTIFICATION_ENABLED: "true"
-  # Ajuste para o URL público exposto ao cliente (Ingress / LB).
-  PUBLIC_BASE_URL: "https://api.example.com/api/public"
-  # Keycloak no cluster (ajuste host/porta conforme o Service real).
-  JWT_JWK_SET_URI: "http://keycloak.keycloak.svc.cluster.local:8080/realms/oficina/protocol/openid-connect/certs"
-  JWT_ALLOWED_ISSUERS: "http://keycloak.keycloak.svc.cluster.local:8080/realms/oficina"
+  NOTIFICATION_ENABLED: "false"
+  PUBLIC_BASE_URL: "http://localhost:8088/api/public"
+  JWT_JWK_SET_URI: "http://localhost:8180/realms/oficina/protocol/openid-connect/certs"
+  JWT_ALLOWED_ISSUERS: "http://localhost:8180/realms/oficina"
+  JWT_CPF_ENABLED: "true"
+  JWT_CPF_ISSUER: "https://oficina.local/auth/cpf"

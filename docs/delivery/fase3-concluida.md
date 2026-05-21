@@ -1,41 +1,41 @@
 # Fase 3 — Critérios do enunciário atendidos (Tech Challenge)
 
-Consolidacao **no repositorio oficina-app** em relacao ao PDF **13SOAT — Fase 3**. Convites ao portal, video e custos AWS ficam do lado da conta do aluno (ver [entrega-portal-fase3.md](entrega-portal-fase3.md)).
+Consolidação **no repositório oficina-app** em relação ao PDF **13SOAT — Fase 3**.
 
 ## Autenticacao e API
 
 | Requisito | Evidencia |
 |-----------|-----------|
-| Funcao serverless: validar documento, consultar cliente e status, emitir JWT | [`auth-lambda/`](../../auth-lambda/) (Python), [`ClienteSessaoController`](../../src/main/java/br/com/oficina/cpf/api/ClienteSessaoController.java), `security.cpf-jwt` em [`application.yml`](../../src/main/resources/application.yml) |
-| API Gateway (definicao IaC) | Terraform [`infra/terraform/aws-auth-lambda/`](../../infra/terraform/aws-auth-lambda/) — HTTP API `POST /token`; workflow [`.github/workflows/deploy-auth-lambda-aws.yml`](../../.github/workflows/deploy-auth-lambda-aws.yml) |
+| Funcao serverless: validar documento, consultar cliente e status, emitir JWT | [`auth-lambda/`](../../auth-lambda/) + [`k8s/auth-lambda.yaml`](../../k8s/auth-lambda.yaml) |
+| API Gateway | **Traefik** — [`k8s/platform/traefik.yaml`](../../k8s/platform/traefik.yaml) + [`k8s/ingress.yaml`](../../k8s/ingress.yaml) |
 
 ## Repositorios e CI/CD
 
 | Requisito | Evidencia |
 |-----------|-----------|
-| Quatro repositorios Git com CI/CD | Tabela em [entrega-portal-fase3.md](entrega-portal-fase3.md); neste repo: [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), [`auth-lambda-ci.yml`](../../.github/workflows/auth-lambda-ci.yml), [`deploy-auth-lambda-aws.yml`](../../.github/workflows/deploy-auth-lambda-aws.yml) |
+| Quatro repositorios Git com CI/CD | Tabela em [entrega-portal-fase3.md](entrega-portal-fase3.md) |
 
-## Infraestrutura (codigo no repo)
+## Infraestrutura
 
 | Requisito | Evidencia |
 |-----------|-----------|
-| Terraform na nuvem (Lambda + Gateway HTTP) | [`infra/terraform/aws-auth-lambda/README.md`](../../infra/terraform/aws-auth-lambda/README.md) |
-| Kubernetes (app) | [`k8s/`](../../k8s/) |
-| BD gerenciado | Liquibase + Postgres — schema em [`db/changelog`](../../src/main/resources/db/changelog); RDS propriamente dito nos repositorios **oficina-infra-database** |
+| Terraform Kubernetes | Repositório **oficina-infra-kubernetes-** (Kind) |
+| Terraform BD | Repositório **oficina-infra-database** (`enable_rds` opcional); laboratório usa Postgres em [`k8s/postgres.yaml`](../../k8s/postgres.yaml) |
+| App no Kubernetes | [`k8s/`](../../k8s/) + [`scripts/fase3/deploy-local-kind.sh`](../../scripts/fase3/deploy-local-kind.sh) |
 
 ## Observabilidade
 
 | Requisito | Evidencia |
 |-----------|-----------|
-| Metricas (latencia HTTP Spring, dominio OS, falhas notificacao) | [`observabilidade-prometheus.md`](../fase3/observabilidade-prometheus.md), endpoint `/actuator/prometheus` |
-| Logs JSON + correlacao | Perfil `k8s` em [`logback-spring.xml`](../../src/main/resources/logback-spring.xml), [`CorrelationIdFilter`](../../src/main/java/br/com/oficina/shared/infra/http/CorrelationIdFilter.java) |
+| Metricas | [`k8s/platform/prometheus.yaml`](../../k8s/platform/prometheus.yaml), `/actuator/prometheus` |
+| Logs JSON + correlacao | Perfil `k8s`, [`CorrelationIdFilter`](../../src/main/java/br/com/oficina/shared/infra/http/CorrelationIdFilter.java) |
+| Dashboards | [`k8s/platform/grafana.yaml`](../../k8s/platform/grafana.yaml) |
 
-## Documentacao de arquitetura
+## Entrega portal
 
 | Requisito | Evidencia |
 |-----------|-----------|
-| Diagramas, RFC, ADR | [`docs/fase3/README.md`](../fase3/README.md), [`docs/adr/`](../adr/) |
+| PDF unico | [`entrega-portal-fase3.md`](entrega-portal-fase3.md) → `entrega-portal-fase3.pdf` |
+| soat-architecture | Convidado nos quatro repos |
 
----
-
-**Verificacao local sugerida antes da entrega:** `mvn verify` na raiz; para Lambda, `pytest` em `auth-lambda/` (com venv).
+**Verificacao local:** `./scripts/fase3/deploy-local-kind.sh` (Docker + Kind + Terraform).

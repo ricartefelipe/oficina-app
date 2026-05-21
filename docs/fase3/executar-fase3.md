@@ -2,6 +2,14 @@
 
 Este documento separa o que o **repositório pode preparar** (arquivos e script) do que **depende da sua conta** (AWS, GitHub, convites).
 
+## Deploy local (Fase 3 — custo zero)
+
+```bash
+./scripts/fase3/deploy-local-kind.sh
+```
+
+Ver [`k8s/README.md`](../../k8s/README.md) e [`docs/delivery/entrega-portal-fase3.md`](../delivery/entrega-portal-fase3.md).
+
 ## O que você já pode gerar localmente
 
 Na raiz do monorepo, execute (PowerShell):

@@ -1,83 +1,59 @@
-# Kubernetes - aplicação Oficina
+# Kubernetes — aplicação Oficina (Fase 3)
 
-Manifestos para o namespace `oficina`: **Deployment**, **Service**, **ConfigMap**, **Secret** (exemplo), **HPA** e probes HTTP nos endpoints do Actuator (`/actuator/health/*`).
+Stack completa para **Kind local** (custo zero): Postgres, auth CPF, app Spring, **Traefik** (gateway), Prometheus e Grafana.
 
-## Pré-requisitos
+## Deploy automatizado
 
-- Cluster Kubernetes funcional (EKS, GKE, AKS, kind, minikube, etc.).
-- **PostgreSQL** acessível a partir do cluster (serviço no cluster, CNPG, RDS, Cloud SQL, etc.). O JDBC em `secret.example.yaml` é apenas ilustrativo.
-- **Keycloak** (ou outro IdP) com JWK e *issuers* coerentes com o que a aplicação valida (`JWT_JWK_SET_URI`, `JWT_ALLOWED_ISSUERS` no ConfigMap).
-- Imagem da API publicada num registry que o cluster consiga puxar, ou imagem carregada localmente (kind/minikube).
+```bash
+./scripts/fase3/deploy-local-kind.sh
+```
 
-## Ordem sugerida de apply
+Pré-requisitos: Docker (rodando), Kind, kubectl, Terraform, Maven.  
+Gateway: http://localhost:8088
 
-1. Namespace e ConfigMap:
+## Manifestos
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `namespace.yaml` | Namespace `oficina` |
+| `secret.example.yaml` | Copiar para secret antes do apply (valores de laboratório) |
+| `configmap.yaml` | App + JWT CPF |
+| `postgres.yaml` | PostgreSQL 16 |
+| `auth-lambda.yaml` | Auth HTTP (código da Lambda) |
+| `deployment.yaml` / `service.yaml` | API Spring Boot |
+| `ingress.yaml` | Traefik — `/token` e `/api` |
+| `platform/traefik.yaml` | API Gateway (Traefik) |
+| `platform/prometheus.yaml` | Métricas |
+| `platform/grafana.yaml` | Dashboards |
+| `hpa.yaml` | HPA (requer metrics-server) |
+
+## Ordem manual (sem script)
 
 ```bash
 kubectl apply -f k8s/namespace.yaml
+cp k8s/secret.example.yaml /tmp/secret.yaml && kubectl apply -f /tmp/secret.yaml
 kubectl apply -f k8s/configmap.yaml
-```
-
-2. Secret com credenciais reais (não commite):
-
-```bash
-cp k8s/secret.example.yaml k8s/secret.yaml
-# Edite k8s/secret.yaml (DB_URL, DB_USER, DB_PASS)
-kubectl apply -f k8s/secret.yaml
-```
-
-Se criou **RDS** com Terraform (`enable_rds = true` em `infra/`), use os outputs `rds_jdbc_url`, `rds_master_password` e o utilizador configurado (`db_username`, por defeito `oficina`) para preencher `DB_URL`, `DB_PASS` e `DB_USER`. Ver [`../infra/README.md`](../infra/README.md).
-
-3. Deployment, Service e HPA:
-
-```bash
+kubectl apply -f k8s/platform/traefik.yaml
+kubectl apply -f k8s/postgres.yaml
+kubectl apply -f k8s/auth-lambda.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
-kubectl apply -f k8s/hpa.yaml
+kubectl apply -f k8s/platform/prometheus.yaml
+kubectl apply -f k8s/platform/grafana.yaml
+kubectl apply -f k8s/ingress.yaml
 ```
 
-4. Ajustar imagem (se necessário):
+Imagens locais: `oficina-app:local`, `oficina-auth:local` (build + `kind load docker-image`).
+
+## Fluxo de teste
 
 ```bash
-kubectl -n oficina set image deployment/oficina-app app=SEU_REGISTRY/oficina-springboot-mvp:VERSAO
+curl -s -X POST http://localhost:8088/token \
+  -H 'Content-Type: application/json' \
+  -d '{"cpf":"52998224725"}'
+
+curl -s http://localhost:8088/api/cliente/sessao \
+  -H "Authorization: Bearer <access_token>"
 ```
 
-## Rollback
-
-Listar revisões:
-
-```bash
-kubectl -n oficina rollout history deployment/oficina-app
-```
-
-Voltar à revisão anterior:
-
-```bash
-kubectl -n oficina rollout undo deployment/oficina-app
-```
-
-Para uma revisão específica:
-
-```bash
-kubectl -n oficina rollout undo deployment/oficina-app --to-revision=2
-```
-
-## Verificação rápida
-
-```bash
-kubectl -n oficina get pods,svc,hpa
-kubectl -n oficina logs -l app=oficina-app --tail=100
-```
-
-Port-forward local (sem Ingress):
-
-```bash
-kubectl -n oficina port-forward svc/oficina-app 8080:8080
-# Ex.: http://localhost:8080/actuator/health
-```
-
-## Notas
-
-- O **MailHog** do docker-compose não existe por defeito no cluster; ajuste `MAIL_HOST` / `MAIL_PORT` no ConfigMap para o seu SMTP ou desative notificações com `NOTIFICATION_ENABLED=false`.
-- `PUBLIC_BASE_URL` deve refletir o URL público usado nos e-mails (links para o cliente).
-- O HPA requer **metrics-server** instalado no cluster para métricas de CPU/memória.
+Cliente demo: CPF `52998224725` (Liquibase `0006-seed-cliente-demo-fase3`).
