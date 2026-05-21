@@ -73,16 +73,19 @@ O usuário **`soat-architecture`** tem **acesso de leitura** aos **quatro** repo
 | RFC autenticação CPF/JWT | [`docs/fase3/rfc/rfc-0001-autenticacao-cpf-jwt-serverless.md`](https://github.com/ricartefelipe/oficina-app/blob/main/docs/fase3/rfc/rfc-0001-autenticacao-cpf-jwt-serverless.md) |
 | ADRs | [`docs/adr/README.md`](https://github.com/ricartefelipe/oficina-app/blob/main/docs/adr/README.md) |
 | Observabilidade | [`docs/fase3/observabilidade-prometheus.md`](https://github.com/ricartefelipe/oficina-app/blob/main/docs/fase3/observabilidade-prometheus.md) |
+| Justificativa BD + modelo relacional | [`docs/fase3/justificativa-banco-dados.md`](https://github.com/ricartefelipe/oficina-app/blob/main/docs/fase3/justificativa-banco-dados.md) |
+| Matriz conformidade enunciado | [`docs/delivery/matriz-conformidade-fase3.md`](https://github.com/ricartefelipe/oficina-app/blob/main/docs/delivery/matriz-conformidade-fase3.md) |
 
 ### 6.2 Evidências CI/CD (últimas execuções com sucesso)
 
 | Repositório | Link |
 |-------------|------|
-| oficina-app (CI) | https://github.com/ricartefelipe/oficina-app/actions/runs/25968127589 |
-| oficina-app (Deploy K8s) | https://github.com/ricartefelipe/oficina-app/actions/runs/25968199744 |
-| oficina-auth-lambda | https://github.com/ricartefelipe/oficina-auth-lambda/actions/runs/25646756207 |
+| oficina-app (CI Maven) | https://github.com/ricartefelipe/oficina-app/actions/runs/26208396688 |
+| oficina-app (CI auth-lambda) | https://github.com/ricartefelipe/oficina-app/actions/runs/26208396734 |
+| oficina-app (Deploy K8s) | https://github.com/ricartefelipe/oficina-app/actions/runs/26208463662 |
+| oficina-auth-lambda | https://github.com/ricartefelipe/oficina-auth-lambda/actions/runs/26208406714 |
 | oficina-infra-database | https://github.com/ricartefelipe/oficina-infra-database/actions/runs/25647090367 |
-| oficina-infra-kubernetes- | https://github.com/ricartefelipe/oficina-infra-kubernetes-/actions/runs/25647085909 |
+| oficina-infra-kubernetes- | https://github.com/ricartefelipe/oficina-infra-kubernetes-/actions/runs/26208402299 |
 
 ### 6.3 Observabilidade
 
@@ -105,9 +108,22 @@ Em vez de AWS (RDS + Lambda + EKS), a demonstração usa **Kind + Terraform** (`
 | Quatro repositórios + CI/CD | Seção 2 + evidências 6.2 |
 | BD gerenciado + K8s + Terraform | Postgres no cluster + Kind Terraform + `k8s/` |
 | Observabilidade | Prometheus, Grafana, logs JSON — seção 6.3 |
-| Diagramas, RFC, ADR | Seção 6.1 |
+| Diagramas, RFC, ADR, modelo dados | Seção 6.1 + justificativa BD |
 | `soat-architecture` | Seção 3 |
+| Matriz vs. enunciado PDF | [`matriz-conformidade-fase3.md`](matriz-conformidade-fase3.md) |
 
 ---
 
-*Entrega Fase 3 — stack local Kind documentada e automatizada em `scripts/fase3/deploy-local-kind.sh`.*
+## 8. Pacote zipado (backup / arquivo)
+
+Estrutura em camadas gerada por:
+
+```bash
+./scripts/delivery/build-fase3-entrega-zip.sh
+```
+
+Saída: `~/Downloads/oficina-tech-challenge-fase3-entrega.zip` (PDF + 4 repos + documentação).
+
+---
+
+*Entrega Fase 3 — stack local Kind documentada em `scripts/fase3/deploy-local-kind.sh`.*
