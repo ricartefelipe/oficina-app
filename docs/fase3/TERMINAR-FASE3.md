@@ -29,14 +29,9 @@ API: `GET /api/cliente/sessao` com Bearer JWT
 
 ---
 
-## Gerar PDF para o portal
+## PDF no portal
 
-```bash
-pip install --user fpdf2
-python3 scripts/delivery/gen_entrega_pdf.py
-```
-
-Enviar **`docs/delivery/entrega-portal-fase3.pdf`** no portal do aluno.
+Enviar **`docs/delivery/entrega-portal-fase3.pdf`** no portal do aluno (também disponível no repositório em `docs/delivery/`).
 
 ---
 

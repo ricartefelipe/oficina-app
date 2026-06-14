@@ -121,15 +121,9 @@ Kind + Traefik + Postgres in-cluster permanecem em `./scripts/fase3/deploy-local
 
 ---
 
-## 8. Pacote zipado (backup / arquivo)
+## 8. Pacote zipado (portal)
 
-Estrutura em camadas gerada por:
-
-```bash
-./scripts/delivery/build-fase3-entrega-zip.sh
-```
-
-Saída: `~/Downloads/oficina-tech-challenge-fase3-entrega.zip` (PDF + 4 repos + documentação).
+Arquivo compactado enviado **apenas no portal do aluno** (backup com PDF, documentação e cópia dos quatro repositórios). Não faz parte do Git — o código-fonte está nos repositórios listados na seção 2.
 
 ---
 

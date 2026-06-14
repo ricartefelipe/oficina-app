@@ -21,7 +21,7 @@ Thumbs.db
 build/security/*
 !build/security/.gitkeep
 
-# HTML intermédio da geração de PDF (scripts/delivery/md-to-pdf-edge.ps1)
+# HTML intermédio (geração local de PDF, se aplicável)
 docs/delivery/*.html
 
 # Kubernetes secrets locais (use secret.example.yaml)
