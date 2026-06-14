@@ -1,5 +1,16 @@
 # Observabilidade — Prometheus e logs (Fase 3)
 
+## Stack ativa (EKS sa-east-1)
+
+Prometheus e Grafana rodam no cluster **oficina-dev** (namespace `oficina`), com scrape em `/api/actuator/prometheus` e alerta **`OficinaAppDown`** (`k8s/aws/prometheus.yaml`).
+
+```bash
+kubectl port-forward -n oficina svc/prometheus 9090:9090
+kubectl port-forward -n oficina svc/grafana 3000:3000
+```
+
+Grafana: datasource Prometheus configurado; login admin/admin (lab).
+
 ## Métricas HTTP e JVM
 
 Com `micrometer-registry-prometheus` no classpath, o endpoint **`GET /api/actuator/prometheus`** expõe o formato **Prometheus** (text/plain).

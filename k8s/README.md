@@ -1,22 +1,34 @@
 # Kubernetes — aplicação Oficina (Fase 3)
 
-Stack completa para **Kind local** (custo zero): Postgres, auth CPF, app Spring, **Traefik** (gateway), Prometheus e Grafana.
+## Deploy AWS (entrega principal)
 
-## Deploy automatizado
+Cluster **EKS** `oficina-dev` (`sa-east-1`), app conectada ao **RDS**, auth via **Lambda + API Gateway**.
+
+```bash
+./scripts/fase3/deploy-aws-eks-app.sh
+```
+
+Manifestos: **`k8s/aws/`** (deployment, LoadBalancer, Prometheus, Grafana).  
+URLs publicas: [`docs/delivery/entrega-portal-fase3.md`](../docs/delivery/entrega-portal-fase3.md).
+
+---
+
+## Laboratorio local (Kind)
+
+Stack Kind (custo zero): Postgres in-cluster, auth HTTP, Traefik, Prometheus, Grafana.
 
 ```bash
 ./scripts/fase3/deploy-local-kind.sh
 ```
 
-Pré-requisitos: Docker (rodando), Kind, kubectl, Terraform, Maven.  
 Gateway: http://localhost:8088
 
-## Manifestos
+### Manifestos Kind
 
 | Arquivo | Conteúdo |
 |---------|----------|
 | `namespace.yaml` | Namespace `oficina` |
-| `secret.example.yaml` | Copiar para secret antes do apply (valores de laboratório) |
+| `secret.example.yaml` | Copiar para secret antes do apply |
 | `configmap.yaml` | App + JWT CPF |
 | `postgres.yaml` | PostgreSQL 16 |
 | `auth-lambda.yaml` | Auth HTTP (código da Lambda) |
@@ -27,25 +39,7 @@ Gateway: http://localhost:8088
 | `platform/grafana.yaml` | Dashboards |
 | `hpa.yaml` | HPA (requer metrics-server) |
 
-## Ordem manual (sem script)
-
-```bash
-kubectl apply -f k8s/namespace.yaml
-cp k8s/secret.example.yaml /tmp/secret.yaml && kubectl apply -f /tmp/secret.yaml
-kubectl apply -f k8s/configmap.yaml
-kubectl apply -f k8s/platform/traefik.yaml
-kubectl apply -f k8s/postgres.yaml
-kubectl apply -f k8s/auth-lambda.yaml
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-kubectl apply -f k8s/platform/prometheus.yaml
-kubectl apply -f k8s/platform/grafana.yaml
-kubectl apply -f k8s/ingress.yaml
-```
-
-Imagens locais: `oficina-app:local`, `oficina-auth:local` (build + `kind load docker-image`).
-
-## Fluxo de teste
+### Fluxo de teste (Kind)
 
 ```bash
 curl -s -X POST http://localhost:8088/token \
