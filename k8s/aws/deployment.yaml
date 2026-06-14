@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oficina-app
+  namespace: oficina
+  labels:
+    app.kubernetes.io/name: oficina-app
+    app.kubernetes.io/component: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oficina-app
+  template:
+    metadata:
+      labels:
+        app: oficina-app
+        app.kubernetes.io/name: oficina-app
+        app.kubernetes.io/component: api
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+        - name: app
+          image: PLACEHOLDER_ECR_IMAGE
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: oficina-app-config
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oficina-app-secret
+                  key: DB_URL
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: oficina-app-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: oficina-app-secret
+                  key: DB_PASS
+            - name: JWT_CPF_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oficina-app-secret
+                  key: JWT_CPF_SECRET
+            - name: JWT_CPF_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: oficina-app-config
+                  key: JWT_CPF_ENABLED
+            - name: JWT_CPF_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: oficina-app-config
+                  key: JWT_CPF_ISSUER
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          startupProbe:
+            httpGet:
+              path: /api/actuator/health/readiness
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/actuator/health/readiness
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/actuator/health/liveness
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3

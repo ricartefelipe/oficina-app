@@ -1,6 +1,27 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: prometheus-rules
+  namespace: oficina
+  labels:
+    app.kubernetes.io/name: prometheus
+data:
+  alerts.yml: |
+    groups:
+      - name: oficina-app
+        rules:
+          - alert: OficinaAppDown
+            expr: up{job="oficina-app"} == 0
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "oficina-app indisponivel"
+              description: "Prometheus nao consegue coletar metricas da API ha mais de 2 minutos."
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: prometheus-config
   namespace: oficina
   labels:
@@ -9,6 +30,8 @@ data:
   prometheus.yml: |
     global:
       scrape_interval: 15s
+    rule_files:
+      - /etc/prometheus/rules/alerts.yml
     scrape_configs:
       - job_name: oficina-app
         metrics_path: /api/actuator/prometheus
@@ -60,7 +83,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/prometheus
+            - name: rules
+              mountPath: /etc/prometheus/rules
       volumes:
         - name: config
           configMap:
             name: prometheus-config
+        - name: rules
+          configMap:
+            name: prometheus-rules
