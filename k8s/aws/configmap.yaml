@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oficina-app-config
+  namespace: oficina
+  labels:
+    app.kubernetes.io/name: oficina-app
+    app.kubernetes.io/component: api
+data:
+  SPRING_PROFILES_ACTIVE: "prod,k8s"
+  MAIL_HOST: "localhost"
+  MAIL_PORT: "1025"
+  NOTIFICATION_ENABLED: "false"
+  PUBLIC_BASE_URL: "http://pending-lb/api/public"
+  JWT_JWK_SET_URI: "http://localhost/disabled"
+  JWT_ALLOWED_ISSUERS: "https://oficina.local/auth/cpf"
+  JWT_CPF_ENABLED: "true"
+  JWT_CPF_ISSUER: "https://oficina.local/auth/cpf"
+  MANAGEMENT_HEALTH_MAIL_ENABLED: "false"

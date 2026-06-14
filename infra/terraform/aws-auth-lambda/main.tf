@@ -13,24 +13,30 @@ data "aws_iam_policy_document" "lambda_assume" {
 }
 
 resource "aws_iam_role" "lambda" {
+  count              = var.lambda_role_arn == "" ? 1 : 0
   name               = "${local.name_prefix}-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role       = aws_iam_role.lambda.name
+  count      = var.lambda_role_arn == "" ? 1 : 0
+  role       = aws_iam_role.lambda[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_vpc" {
-  count      = length(var.lambda_subnet_ids) > 0 ? 1 : 0
-  role       = aws_iam_role.lambda.name
+  count      = var.lambda_role_arn == "" && length(var.lambda_subnet_ids) > 0 ? 1 : 0
+  role       = aws_iam_role.lambda[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
+locals {
+  lambda_role_arn = var.lambda_role_arn != "" ? var.lambda_role_arn : aws_iam_role.lambda[0].arn
 }
 
 resource "aws_lambda_function" "auth" {
   function_name    = "${local.name_prefix}-fn"
-  role             = aws_iam_role.lambda.arn
+  role             = local.lambda_role_arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.12"
   architectures    = ["x86_64"]

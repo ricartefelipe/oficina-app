@@ -71,6 +71,12 @@ variable "jwt_expiration_seconds" {
   default     = "3600"
 }
 
+variable "lambda_role_arn" {
+  type        = string
+  description = "ARN de role IAM existente para a Lambda (criada no console se o deploy user nao tem iam:CreateRole)"
+  default     = ""
+}
+
 variable "lambda_subnet_ids" {
   type        = list(string)
   description = "Subnets para Lambda em VPC (vazio = Lambda sem VPC; RDS precisa aceitar conexão desse modo ou usar IPs públicos/SG)"
