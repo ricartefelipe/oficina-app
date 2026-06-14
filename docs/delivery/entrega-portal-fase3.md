@@ -3,15 +3,6 @@
 **Grupo:** Oficina Turbo (106)  
 **Aluno:** Felipe Ricarte Magalhães  
 
-Este Markdown é a **fonte do PDF** a submeter no portal da disciplina. Regenerar com:
-
-```bash
-pip install --user fpdf2
-python3 scripts/delivery/gen_entrega_pdf.py
-```
-
-Arquivo gerado: **`docs/delivery/entrega-portal-fase3.pdf`**
-
 ---
 
 ## 1. Repositório principal da aplicação (Fase 3 — app no Kubernetes)
