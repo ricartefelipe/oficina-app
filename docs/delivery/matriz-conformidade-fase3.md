@@ -4,7 +4,7 @@ Referência: enunciado **Tech Challenge — Fase 3**. Legenda: **Atende** | **Pa
 
 | Requisito (enunciado) | Status | Evidência |
 |------------------------|--------|-----------|
-| API Gateway (AWS/Kong/Traefik/etc.) | Atende | API Gateway HTTP (Lambda) + Traefik no Kind local |
+| API Gateway (AWS/Kong/Traefik/etc.) | Atende | API Gateway HTTP (Lambda) em sa-east-1; Traefik apenas no Kind (lab) |
 | Rotas sensíveis com auth CPF | Atende | JWT CPF + `SecurityConfig`; `POST /token` |
 | Function serverless: validar CPF | Atende | Lambda `oficina-auth-cpf-fn` + repo `oficina-auth-lambda` |
 | Consultar cliente e status na BD | Atende | Liquibase `0005`; query em `lambda_function.py` |

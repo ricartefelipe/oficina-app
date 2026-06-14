@@ -2,7 +2,18 @@
 
 Este documento separa o que o **repositório pode preparar** (arquivos e script) do que **depende da sua conta** (AWS, GitHub, convites).
 
-## Deploy local (Fase 3 — custo zero)
+## Deploy AWS (entrega Fase 3)
+
+Ordem recomendada:
+
+1. **RDS** — repo `oficina-infra-database`: `terraform apply` com `enable_rds=true`
+2. **Lambda auth** — `oficina-app/infra/terraform/aws-auth-lambda`
+3. **EKS** — repo `oficina-infra-kubernetes-`, pasta `aws-eks/`
+4. **App + observabilidade** — `./scripts/fase3/deploy-aws-eks-app.sh`
+
+Evidencias e URLs: [`docs/delivery/entrega-portal-fase3.md`](../delivery/entrega-portal-fase3.md).
+
+## Deploy local (laboratorio — custo zero)
 
 ```bash
 ./scripts/fase3/deploy-local-kind.sh
