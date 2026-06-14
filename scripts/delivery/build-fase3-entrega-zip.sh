@@ -82,8 +82,11 @@ Gateway: http://localhost:8088
 EOF
 
 log "Verificando ausencia de rastros indesejados no pacote"
-if grep -rIilE 'cursoragent|Co-authored-by: Cursor|Made-with: Cursor|ChatGPT|Copilot|Claude Code' "$STAGING" 2>/dev/null; then
+matches=$(grep -rIilE 'cursoragent|Co-authored-by: Cursor|Made-with: Cursor|ChatGPT|Copilot|Claude Code' "$STAGING" 2>/dev/null \
+  | grep -v 'build-fase3-entrega-zip.sh' || true)
+if [ -n "$matches" ]; then
   echo "ERRO: possivel rastro encontrado nos arquivos acima" >&2
+  echo "$matches" >&2
   exit 1
 fi
 
