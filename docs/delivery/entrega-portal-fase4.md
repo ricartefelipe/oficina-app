@@ -91,9 +91,9 @@ Adotamos **coreografia** porque:
 
 | Serviço | Cobertura | Status |
 |---|---|---|
-| oficina-os-service | **90%** | ✅ ≥ 80% |
-| oficina-billing-service | **88%** | ✅ ≥ 80% |
-| oficina-execution-service | **94%** | ✅ ≥ 80% |
+| oficina-os-service | **92.9%** | ✅ ≥ 80% |
+| oficina-billing-service | **84.5%** | ✅ ≥ 80% |
+| oficina-execution-service | **93.0%** | ✅ ≥ 80% |
 
 Tipos de teste implementados:
 - **Unitários** — domínio, casos de uso, adaptadores, listeners, controllers
@@ -223,7 +223,7 @@ Roteiro sugerido:
 | Testes unitários | ✅ JUnit 5 + Mockito |
 | Testes BDD | ✅ Cucumber em todos os serviços |
 | Cobertura ≥ 80% (JaCoCo) | ✅ 90% / 88% / 94% |
-| SonarQube / SonarCloud | ✅ Configurado (token pendente) |
+| SonarQube / SonarCloud | ✅ Ativo — dashboards públicos |
 | CI/CD automatizado | ✅ GitHub Actions em todos os repos |
 | Deploy Kubernetes | ✅ Manifests `/k8s` em todos os repos |
 | Observabilidade (Fase 3 reutilizada) | ✅ Prometheus + Grafana |
