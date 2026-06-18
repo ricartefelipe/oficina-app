@@ -9,6 +9,7 @@ Monólito do **Sistema Integrado de Atendimento e Execução de Serviços** para
 | **Fase 1** | MVP funcional: APIs, persistência, Docker, testes, DDD em Markdown, segurança admin/público. |
 | **Fase 2** | **Resiliência e escalabilidade**: Clean Code e **arquitetura hexagonal**, testes nos fluxos críticos, **contêineres**, **Kubernetes** (`/k8s`), **IaC** (`/infra`), **CI/CD** (GitHub Actions), preparação para picos de carga (HPA, imagem no registry). |
 | **Fase 3** | **Operação corporativa**: **API Gateway**, autenticação **CPF** com **função serverless** e **JWT**, **quatro repositórios** com CI/CD e deploy na nuvem, **BD gerido**, **Kubernetes**, **Terraform**, **observabilidade** (métricas, logs, traces, dashboards). |
+| **Fase 4** | **Microsserviços + Saga Pattern**: decomposição em 3 microsserviços independentes ([OS](https://github.com/ricartefelipe/oficina-os-service), [Billing](https://github.com/ricartefelipe/oficina-billing-service), [Execution](https://github.com/ricartefelipe/oficina-execution-service)), RabbitMQ, PostgreSQL + MongoDB, JaCoCo ≥ 80%, Cucumber BDD, CI/CD e K8s. |
 
 > Requisitos oficiais: **Fase 2** e **Fase 3** - documentos Tech Challenge (disciplina SOAT).
 
@@ -22,6 +23,7 @@ Conforme o enunciário: **repositório** atualizado (código, `/k8s`, `/infra`, 
 |-----------|-----|
 | [**Entrega PDF — portal (Fase 2)**](docs/delivery/entrega-portal-fase2.md) | Markdown para PDF; **PDF exemplo:** [`docs/delivery/entrega-portal-fase2.pdf`](docs/delivery/entrega-portal-fase2.pdf). |
 | [**Entrega PDF — portal (Fase 3)**](docs/delivery/entrega-portal-fase3.md) | Markdown de referência; **PDF:** [`docs/delivery/entrega-portal-fase3.pdf`](docs/delivery/entrega-portal-fase3.pdf). |
+| [**Entrega PDF — portal (Fase 4)**](docs/delivery/entrega-portal-fase4.md) | Markdown de referência para conversão em PDF de entrega. |
 | [Submissão / checklist](docs/delivery/submission.md) | Documento longo; **PDF pronto:** [`docs/delivery/submission.pdf`](docs/delivery/submission.pdf). |
 | [Roteiro do vídeo](docs/video-script.md) | Blocos Fase 2 + complementos para demo na Fase 3. |
 
