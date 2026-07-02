@@ -91,9 +91,9 @@ Adotamos **coreografia** porque:
 
 | Serviço | Cobertura | Status |
 |---|---|---|
-| oficina-os-service | **92.9%** | ✅ ≥ 80% |
-| oficina-billing-service | **84.5%** | ✅ ≥ 80% |
-| oficina-execution-service | **93.0%** | ✅ ≥ 80% |
+| oficina-os-service | **92.9%** | ✅ ≥ 80% — SonarCloud Quality Gate: **OK** |
+| oficina-billing-service | **84.5%** | ✅ ≥ 80% — SonarCloud Quality Gate: **OK** |
+| oficina-execution-service | **93.0%** | ✅ ≥ 80% — SonarCloud Quality Gate: **OK** |
 
 Tipos de teste implementados:
 - **Unitários** — domínio, casos de uso, adaptadores, listeners, controllers
@@ -222,8 +222,9 @@ Roteiro sugerido:
 | Saga Pattern implementado | ✅ Coreografia com compensações |
 | Testes unitários | ✅ JUnit 5 + Mockito |
 | Testes BDD | ✅ Cucumber em todos os serviços |
-| Cobertura ≥ 80% (JaCoCo) | ✅ 90% / 88% / 94% |
-| SonarQube / SonarCloud | ✅ Ativo — dashboards públicos |
-| CI/CD automatizado | ✅ GitHub Actions em todos os repos |
-| Deploy Kubernetes | ✅ Manifests `/k8s` em todos os repos |
-| Observabilidade (Fase 3 reutilizada) | ✅ Prometheus + Grafana |
+| Cobertura ≥ 80% (JaCoCo) | ✅ 92.9% / 84.5% / 93.0% |
+| SonarCloud Quality Gate | ✅ **OK** nos 3 serviços — 0 bugs, 0 vulnerabilidades abertas |
+| CI/CD automatizado | ✅ GitHub Actions (`ci.yml` + `deploy.yml`) em todos os repos |
+| Deploy Kubernetes | ✅ `/k8s` completo em todos os repos (namespace, configmap, secret, deployment) |
+| Observabilidade (Fase 3 reutilizada) | ✅ Prometheus + Grafana via `docker-compose.infra.yml` |
+| Vídeo demonstrativo | ⏳ Pendente — a ser inserido antes do envio no portal |
